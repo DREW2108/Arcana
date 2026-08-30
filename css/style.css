@@ -1,21 +1,24 @@
 :root {
     --bg: #0a0810;
     --bg-secondary: #110d19;
+
     --surface: rgba(27, 21, 39, 0.72);
     --surface-solid: #17121f;
-    --surface-soft: rgba(255, 255, 255, 0.045);
-    --border: rgba(255, 255, 255, 0.09);
+    --surface-soft: rgba(157, 117, 213, 0.07);
+
+    --border: rgba(157, 117, 213, 0.18);
 
     --text: #f5f1f7;
     --text-secondary: #aaa1b4;
     --text-muted: #766d7e;
 
+    --primary: #9d75d5;
+    --primary-light: #bd9ae8;
+    --primary-dark: #62428f;
+    --primary-soft: rgba(157, 117, 213, 0.15);
+
     --gold: #d8b56a;
     --gold-light: #f1d994;
-
-    --violet: #9d75d5;
-    --violet-dark: #62428f;
-    --violet-soft: rgba(157, 117, 213, 0.15);
 
     --shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
 
@@ -26,35 +29,38 @@
     --transition: 0.3s ease;
 }
 
-/* =========================
-   LIGHT MODE
-========================= */
+/* ========================================
+   MODO CLARO
+======================================== */
 
 body.light {
     --bg: #f5f0f7;
     --bg-secondary: #ebe4ef;
+
     --surface: rgba(255, 255, 255, 0.76);
     --surface-solid: #ffffff;
-    --surface-soft: rgba(70, 35, 90, 0.045);
-    --border: rgba(55, 30, 70, 0.1);
+    --surface-soft: rgba(117, 80, 167, 0.07);
+
+    --border: rgba(117, 80, 167, 0.16);
 
     --text: #201827;
     --text-secondary: #6d6274;
     --text-muted: #958a9a;
 
+    --primary: #7550a7;
+    --primary-light: #9069c0;
+    --primary-dark: #573581;
+    --primary-soft: rgba(117, 80, 167, 0.12);
+
     --gold: #9d7021;
     --gold-light: #b9862d;
-
-    --violet: #7550a7;
-    --violet-dark: #573581;
-    --violet-soft: rgba(117, 80, 167, 0.1);
 
     --shadow: 0 20px 55px rgba(55, 30, 70, 0.12);
 }
 
-/* =========================
+/* ========================================
    RESET
-========================= */
+======================================== */
 
 * {
     margin: 0;
@@ -72,17 +78,17 @@ body {
     background:
         radial-gradient(
             circle at 10% 5%,
-            rgba(125, 76, 176, 0.18),
+            rgba(125, 76, 176, 0.22),
             transparent 30%
         ),
         radial-gradient(
             circle at 90% 25%,
-            rgba(216, 181, 106, 0.08),
+            rgba(157, 117, 213, 0.12),
             transparent 28%
         ),
         radial-gradient(
             circle at 50% 100%,
-            rgba(98, 58, 140, 0.1),
+            rgba(98, 58, 140, 0.16),
             transparent 35%
         ),
         var(--bg);
@@ -102,9 +108,9 @@ button {
     font-family: inherit;
 }
 
-/* =========================
-   BACKGROUND
-========================= */
+/* ========================================
+   FONDO
+======================================== */
 
 .background-effects {
     position: fixed;
@@ -120,7 +126,7 @@ button {
     height: 450px;
     border-radius: 50%;
     filter: blur(120px);
-    opacity: 0.13;
+    opacity: 0.16;
 }
 
 .orb-one {
@@ -132,7 +138,7 @@ button {
 .orb-two {
     right: -200px;
     top: 35%;
-    background: #d8b56a;
+    background: #9d75d5;
 }
 
 .stars {
@@ -150,9 +156,9 @@ button {
     background-size: 90px 90px;
 }
 
-/* =========================
+/* ========================================
    TOPBAR
-========================= */
+======================================== */
 
 .topbar {
     height: 82px;
@@ -181,10 +187,6 @@ body.light .topbar {
     background: rgba(255, 255, 255, 0.7);
 }
 
-/* =========================
-   BRAND
-========================= */
-
 .brand {
     display: flex;
     align-items: center;
@@ -200,11 +202,14 @@ body.light .topbar {
 
     border-radius: 14px;
 
-    color: var(--gold);
+    color: var(--primary-light);
 
-    background: var(--violet-soft);
+    background: var(--primary-soft);
 
     border: 1px solid var(--border);
+
+    box-shadow:
+        0 0 25px rgba(157, 117, 213, 0.12);
 }
 
 .brand-symbol svg {
@@ -214,8 +219,10 @@ body.light .topbar {
 
 .brand h1 {
     font-family: "Cinzel", serif;
+
     font-size: 18px;
     font-weight: 600;
+
     letter-spacing: 4px;
 }
 
@@ -230,9 +237,9 @@ body.light .topbar {
     letter-spacing: 2px;
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+/* ========================================
+   NAVEGACIÓN
+======================================== */
 
 .main-nav {
     display: flex;
@@ -267,20 +274,26 @@ body.light .topbar {
 
 .nav-button:hover {
     color: var(--text);
-    background: var(--surface-soft);
+
+    background: var(--primary-soft);
+
+    border-color: rgba(157, 117, 213, 0.15);
 }
 
 .nav-button.active {
-    color: var(--gold-light);
+    color: var(--primary-light);
 
-    border-color: var(--border);
+    border-color: rgba(157, 117, 213, 0.3);
 
-    background: var(--surface-soft);
+    background: var(--primary-soft);
+
+    box-shadow:
+        0 0 20px rgba(157, 117, 213, 0.08);
 }
 
-/* =========================
-   THEME BUTTON
-========================= */
+/* ========================================
+   BOTÓN TEMA
+======================================== */
 
 .theme-button {
     width: 43px;
@@ -294,6 +307,7 @@ body.light .topbar {
     border: 1px solid var(--border);
 
     color: var(--text-secondary);
+
     background: var(--surface-soft);
 
     cursor: pointer;
@@ -302,8 +316,11 @@ body.light .topbar {
 }
 
 .theme-button:hover {
-    color: var(--gold);
+    color: var(--primary-light);
+
     transform: rotate(12deg);
+
+    border-color: var(--primary);
 }
 
 .theme-button svg {
@@ -311,9 +328,9 @@ body.light .topbar {
     height: 18px;
 }
 
-/* =========================
+/* ========================================
    HERO
-========================= */
+======================================== */
 
 .hero {
     max-width: 1100px;
@@ -335,10 +352,11 @@ body.light .topbar {
     align-items: center;
     gap: 8px;
 
-    color: var(--gold);
+    color: var(--primary-light);
 
     font-size: 10px;
     font-weight: 600;
+
     letter-spacing: 3px;
 }
 
@@ -366,10 +384,10 @@ body.light .topbar {
 .hero h2 span {
     display: block;
 
-    color: var(--gold);
+    color: var(--primary-light);
 
     text-shadow:
-        0 0 35px rgba(216, 181, 106, 0.08);
+        0 0 35px rgba(157, 117, 213, 0.18);
 }
 
 .hero p {
@@ -384,9 +402,9 @@ body.light .topbar {
     line-height: 1.8;
 }
 
-/* =========================
-   PRACTICE SECTION
-========================= */
+/* ========================================
+   SECCIÓN DE PRÁCTICA
+======================================== */
 
 .practice-section {
     max-width: 1150px;
@@ -416,10 +434,6 @@ body.light .topbar {
     margin-bottom: 25px;
 }
 
-/* =========================
-   PANEL HEADING
-========================= */
-
 .panel-heading,
 .reading-header {
     display: flex;
@@ -433,11 +447,11 @@ body.light .topbar {
     width: 22px;
     height: 22px;
 
-    color: var(--gold);
+    color: var(--primary-light);
 }
 
 .section-label {
-    color: var(--gold);
+    color: var(--primary-light);
 
     font-size: 10px;
     font-weight: 600;
@@ -464,9 +478,9 @@ body.light .topbar {
     font-size: 13px;
 }
 
-/* =========================
-   CONFIGURATION
-========================= */
+/* ========================================
+   CONFIGURACIÓN
+======================================== */
 
 .config-group {
     margin-top: 30px;
@@ -483,10 +497,6 @@ body.light .topbar {
     font-weight: 500;
 }
 
-/* =========================
-   NUMBER OPTIONS
-========================= */
-
 .number-options {
     display: flex;
     flex-wrap: wrap;
@@ -502,6 +512,7 @@ body.light .topbar {
     border-radius: 11px;
 
     color: var(--text-secondary);
+
     background: var(--surface-soft);
 
     cursor: pointer;
@@ -512,25 +523,28 @@ body.light .topbar {
 .number-option:hover {
     color: var(--text);
 
-    border-color: rgba(216, 181, 106, 0.45);
+    border-color: var(--primary);
 
     transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(157, 117, 213, 0.12);
 }
 
 .number-option.active {
-    color: #171119;
+    color: #ffffff;
 
-    background: var(--gold);
+    background: var(--primary);
 
-    border-color: var(--gold);
+    border-color: var(--primary);
 
     box-shadow:
-        0 5px 20px rgba(216, 181, 106, 0.12);
+        0 5px 25px rgba(157, 117, 213, 0.25);
 }
 
-/* =========================
-   SPREAD OPTIONS
-========================= */
+/* ========================================
+   TIPOS DE TIRADA
+======================================== */
 
 .spread-options {
     display: grid;
@@ -543,6 +557,7 @@ body.light .topbar {
 .spread-option {
     display: flex;
     align-items: center;
+
     gap: 12px;
 
     padding: 15px;
@@ -554,6 +569,7 @@ body.light .topbar {
     border: 1px solid var(--border);
 
     color: var(--text);
+
     background: var(--surface-soft);
 
     cursor: pointer;
@@ -564,18 +580,24 @@ body.light .topbar {
 .spread-option:hover {
     transform: translateY(-2px);
 
-    border-color: rgba(216, 181, 106, 0.3);
+    border-color: var(--primary);
+
+    box-shadow:
+        0 8px 25px rgba(157, 117, 213, 0.08);
 }
 
 .spread-option.active {
-    border-color: rgba(216, 181, 106, 0.55);
+    border-color: rgba(157, 117, 213, 0.65);
 
     background:
         linear-gradient(
             135deg,
-            rgba(216, 181, 106, 0.07),
-            rgba(157, 117, 213, 0.05)
+            rgba(157, 117, 213, 0.16),
+            rgba(98, 66, 143, 0.08)
         );
+
+    box-shadow:
+        inset 0 0 20px rgba(157, 117, 213, 0.04);
 }
 
 .spread-icon {
@@ -589,9 +611,9 @@ body.light .topbar {
 
     border-radius: 10px;
 
-    color: var(--gold);
+    color: var(--primary-light);
 
-    background: var(--violet-soft);
+    background: var(--primary-soft);
 }
 
 .spread-icon svg {
@@ -603,7 +625,6 @@ body.light .topbar {
     display: block;
 
     font-size: 12px;
-
     font-weight: 500;
 }
 
@@ -617,9 +638,9 @@ body.light .topbar {
     font-size: 9px;
 }
 
-/* =========================
-   SELECTION MODE
-========================= */
+/* ========================================
+   MODO DE SELECCIÓN
+======================================== */
 
 .selection-mode {
     display: grid;
@@ -632,6 +653,7 @@ body.light .topbar {
 .selection-mode-option {
     display: flex;
     align-items: center;
+
     gap: 15px;
 
     padding: 18px;
@@ -657,14 +679,13 @@ body.light .topbar {
 
     flex-shrink: 0;
 
-    color: var(--gold);
+    color: var(--primary-light);
 }
 
 .selection-mode-option strong {
     display: block;
 
     font-size: 13px;
-
     font-weight: 500;
 }
 
@@ -680,17 +701,22 @@ body.light .topbar {
 
 .selection-mode-option:hover {
     transform: translateY(-2px);
+
+    border-color: var(--primary);
 }
 
 .selection-mode-option.active {
-    border-color: rgba(157, 117, 213, 0.5);
+    border-color: rgba(157, 117, 213, 0.65);
 
-    background: var(--violet-soft);
+    background: var(--primary-soft);
+
+    box-shadow:
+        0 8px 25px rgba(157, 117, 213, 0.08);
 }
 
-/* =========================
-   READING AREA
-========================= */
+/* ========================================
+   ÁREA DE LECTURA
+======================================== */
 
 .reading-area {
     min-height: 500px;
@@ -703,20 +729,20 @@ body.light .topbar {
 
     border-radius: 30px;
 
-    color: var(--gold);
+    color: var(--primary-light);
 
-    background: rgba(216, 181, 106, 0.08);
+    background: var(--primary-soft);
 
-    border: 1px solid rgba(216, 181, 106, 0.15);
+    border: 1px solid rgba(157, 117, 213, 0.25);
 
     font-size: 9px;
 
     letter-spacing: 1px;
 }
 
-/* =========================
-   CARDS AREA
-========================= */
+/* ========================================
+   ÁREA DE CARTAS
+======================================== */
 
 .cards-area {
     min-height: 310px;
@@ -747,6 +773,8 @@ body.light .topbar {
     grid-template-columns: repeat(3, 150px);
 
     justify-content: center;
+
+    align-items: center;
 }
 
 .cards-area.spread-cross {
@@ -786,9 +814,9 @@ body.light .topbar {
     grid-row: 3;
 }
 
-/* =========================
-   EMPTY CARD
-========================= */
+/* ========================================
+   CARTA VACÍA
+======================================== */
 
 .empty-card {
     width: 150px;
@@ -805,13 +833,13 @@ body.light .topbar {
 
     border-radius: 15px;
 
-    border: 1px dashed rgba(216, 181, 106, 0.38);
+    border: 1px dashed rgba(157, 117, 213, 0.55);
 
     background:
         linear-gradient(
             145deg,
-            rgba(216, 181, 106, 0.035),
-            rgba(157, 117, 213, 0.07)
+            rgba(157, 117, 213, 0.08),
+            rgba(98, 66, 143, 0.12)
         );
 
     cursor: pointer;
@@ -831,7 +859,7 @@ body.light .topbar {
 
     border-radius: 10px;
 
-    border: 1px solid rgba(216, 181, 106, 0.08);
+    border: 1px solid rgba(157, 117, 213, 0.16);
 
     pointer-events: none;
 }
@@ -839,11 +867,11 @@ body.light .topbar {
 .empty-card:hover {
     transform: translateY(-8px);
 
-    border-color: var(--gold);
+    border-color: var(--primary-light);
 
     box-shadow:
         0 18px 40px rgba(0, 0, 0, 0.25),
-        0 0 30px rgba(216, 181, 106, 0.08);
+        0 0 30px rgba(157, 117, 213, 0.15);
 }
 
 .empty-card-plus {
@@ -855,11 +883,11 @@ body.light .topbar {
 
     border-radius: 50%;
 
-    color: var(--gold);
+    color: var(--primary-light);
 
-    background: rgba(216, 181, 106, 0.08);
+    background: var(--primary-soft);
 
-    border: 1px solid rgba(216, 181, 106, 0.2);
+    border: 1px solid rgba(157, 117, 213, 0.3);
 
     transition: var(--transition);
 }
@@ -867,7 +895,10 @@ body.light .topbar {
 .empty-card:hover .empty-card-plus {
     transform: scale(1.12);
 
-    background: rgba(216, 181, 106, 0.15);
+    background: rgba(157, 117, 213, 0.2);
+
+    box-shadow:
+        0 0 25px rgba(157, 117, 213, 0.18);
 }
 
 .empty-card-plus svg {
@@ -875,9 +906,9 @@ body.light .topbar {
     height: 21px;
 }
 
-/* =========================
-   TAROT CARD
-========================= */
+/* ========================================
+   CARTAS DE TAROT
+======================================== */
 
 .tarot-slot {
     width: 150px;
@@ -940,19 +971,20 @@ body.light .topbar {
     background:
         radial-gradient(
             circle at center,
-            rgba(157, 117, 213, 0.2),
+            rgba(157, 117, 213, 0.25),
             transparent 45%
         ),
         linear-gradient(
             145deg,
-            #251735,
+            #2b1b43,
             #100c17
         );
 
-    border: 1px solid rgba(216, 181, 106, 0.35);
+    border: 1px solid rgba(157, 117, 213, 0.5);
 
     box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.35);
+        0 20px 40px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(157, 117, 213, 0.08);
 }
 
 .tarot-card-front img {
@@ -979,17 +1011,17 @@ body.light .topbar {
     background:
         linear-gradient(
             145deg,
-            #21152e,
+            #28183a,
             #0e0a13
         );
 
-    border: 1px solid rgba(216, 181, 106, 0.35);
+    border: 1px solid rgba(157, 117, 213, 0.5);
 
     transform: rotateY(180deg);
 }
 
 .selected-card-name {
-    color: var(--gold-light);
+    color: var(--primary-light);
 
     font-family: "Cinzel", serif;
 
@@ -1033,9 +1065,9 @@ body.light .topbar {
     display: block;
 }
 
-/* =========================
-   READING ACTIONS
-========================= */
+/* ========================================
+   BOTONES
+======================================== */
 
 .reading-actions {
     display: flex;
@@ -1068,18 +1100,25 @@ body.light .topbar {
 }
 
 .primary-button {
-    color: #171119;
+    color: #ffffff;
 
-    background: var(--gold);
+    background: var(--primary);
 
-    border: 1px solid var(--gold);
+    border: 1px solid var(--primary);
+
+    box-shadow:
+        0 8px 25px rgba(157, 117, 213, 0.18);
 }
 
 .primary-button:hover {
     transform: translateY(-2px);
 
+    background: var(--primary-light);
+
+    border-color: var(--primary-light);
+
     box-shadow:
-        0 10px 30px rgba(216, 181, 106, 0.18);
+        0 12px 35px rgba(157, 117, 213, 0.28);
 }
 
 .secondary-button {
@@ -1093,7 +1132,9 @@ body.light .topbar {
 .secondary-button:hover {
     color: var(--text);
 
-    border-color: var(--gold);
+    border-color: var(--primary);
+
+    background: var(--primary-soft);
 }
 
 .primary-button svg,
@@ -1102,30 +1143,51 @@ body.light .topbar {
     height: 15px;
 }
 
-/* =========================
-   LEARNING SECTION
-========================= */
+/* ========================================
+   APRENDIZAJE
+======================================== */
 
 .learning-section {
     max-width: 1150px;
 
     margin: 0 auto;
 
-    padding: 40px 30px 100px;
+    padding: 80px 30px 100px;
 }
-
-/*
-   El encabezado antiguo de "INTERACTIVE TAROT"
-   ya no se utiliza.
-*/
 
 .learning-header {
-    display: none;
+    max-width: 650px;
+
+    margin: 0 auto 45px;
+
+    text-align: center;
 }
 
-/* =========================
-   CATEGORY FILTERS
-========================= */
+.learning-header h2 {
+    margin: 18px 0;
+
+    font-family: "Cinzel", serif;
+
+    font-size: clamp(35px, 5vw, 58px);
+
+    font-weight: 500;
+}
+
+.learning-header h2 span {
+    color: var(--primary-light);
+}
+
+.learning-header p {
+    color: var(--text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+/* ========================================
+   FILTROS
+======================================== */
 
 .category-filters {
     display: flex;
@@ -1160,19 +1222,24 @@ body.light .topbar {
 
 .category-filter:hover {
     color: var(--text);
+
+    border-color: var(--primary);
 }
 
 .category-filter.active {
-    color: var(--gold);
+    color: var(--primary-light);
 
-    border-color: rgba(216, 181, 106, 0.35);
+    border-color: rgba(157, 117, 213, 0.55);
 
-    background: rgba(216, 181, 106, 0.06);
+    background: var(--primary-soft);
+
+    box-shadow:
+        0 5px 20px rgba(157, 117, 213, 0.08);
 }
 
-/* =========================
-   LEARNING GRID
-========================= */
+/* ========================================
+   GRID DE APRENDIZAJE
+======================================== */
 
 .learning-grid {
     display: grid;
@@ -1203,10 +1270,11 @@ body.light .topbar {
 .learning-card:hover {
     transform: translateY(-7px);
 
-    border-color: rgba(216, 181, 106, 0.35);
+    border-color: rgba(157, 117, 213, 0.5);
 
     box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.2);
+        0 18px 40px rgba(0, 0, 0, 0.2),
+        0 0 25px rgba(157, 117, 213, 0.08);
 }
 
 .learning-card-image {
@@ -1242,7 +1310,7 @@ body.light .topbar {
 }
 
 .learning-card-info span {
-    color: var(--text-muted);
+    color: var(--primary-light);
 
     font-size: 9px;
 
@@ -1259,9 +1327,9 @@ body.light .topbar {
     font-weight: 500;
 }
 
-/* =========================
+/* ========================================
    MODAL
-========================= */
+======================================== */
 
 .modal-overlay {
     position: fixed;
@@ -1322,9 +1390,9 @@ body.light .topbar {
     transform: translateY(0) scale(1);
 }
 
-/* =========================
-   MODAL HEADER
-========================= */
+/* ========================================
+   HEADER DEL MODAL
+======================================== */
 
 .modal-header {
     display: flex;
@@ -1369,7 +1437,9 @@ body.light .topbar {
 .close-modal:hover {
     color: var(--text);
 
-    border-color: var(--gold);
+    border-color: var(--primary);
+
+    background: var(--primary-soft);
 }
 
 .close-modal svg {
@@ -1377,9 +1447,9 @@ body.light .topbar {
     height: 17px;
 }
 
-/* =========================
-   MODAL SEARCH
-========================= */
+/* ========================================
+   BUSCADOR
+======================================== */
 
 .modal-search {
     display: flex;
@@ -1399,11 +1469,18 @@ body.light .topbar {
     background: var(--surface-soft);
 }
 
+.modal-search:focus-within {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 20px rgba(157, 117, 213, 0.08);
+}
+
 .modal-search svg {
     width: 17px;
     height: 17px;
 
-    color: var(--text-muted);
+    color: var(--primary-light);
 }
 
 .modal-search input {
@@ -1426,9 +1503,9 @@ body.light .topbar {
     color: var(--text-muted);
 }
 
-/* =========================
-   MODAL CARDS
-========================= */
+/* ========================================
+   CARTAS DEL MODAL
+======================================== */
 
 .modal-cards {
     display: grid;
@@ -1472,9 +1549,12 @@ body.light .topbar {
 .selector-card:hover {
     transform: translateY(-5px);
 
-    border-color: rgba(216, 181, 106, 0.45);
+    border-color: rgba(157, 117, 213, 0.55);
 
-    background: rgba(216, 181, 106, 0.06);
+    background: var(--primary-soft);
+
+    box-shadow:
+        0 10px 25px rgba(157, 117, 213, 0.08);
 }
 
 .selector-card-image {
@@ -1487,7 +1567,7 @@ body.light .topbar {
 
     background: #15101d;
 
-    border: 1px solid rgba(216, 181, 106, 0.3);
+    border: 1px solid rgba(157, 117, 213, 0.35);
 }
 
 .selector-card-image img {
@@ -1519,21 +1599,9 @@ body.light .topbar {
     font-size: 8px;
 }
 
-.empty-search {
-    grid-column: 1 / -1;
-
-    padding: 40px;
-
-    text-align: center;
-
-    color: var(--text-muted);
-
-    font-size: 13px;
-}
-
-/* =========================
-   DETAIL MODAL
-========================= */
+/* ========================================
+   MODAL DE DETALLE
+======================================== */
 
 .detail-modal {
     width: min(850px, 100%);
@@ -1583,10 +1651,6 @@ body.light .topbar {
     justify-content: center;
 }
 
-/* =========================
-   DETAIL TAROT CARD
-========================= */
-
 .detail-tarot-card {
     width: 230px;
     height: 390px;
@@ -1634,10 +1698,11 @@ body.light .topbar {
 
     background: #15101d;
 
-    border: 1px solid rgba(216, 181, 106, 0.4);
+    border: 1px solid rgba(157, 117, 213, 0.5);
 
     box-shadow:
-        0 25px 50px rgba(0, 0, 0, 0.4);
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(157, 117, 213, 0.08);
 }
 
 .detail-tarot-front img {
@@ -1666,11 +1731,11 @@ body.light .topbar {
     background:
         linear-gradient(
             145deg,
-            #21152e,
+            #28183a,
             #0e0a13
         );
 
-    border: 1px solid rgba(216, 181, 106, 0.35);
+    border: 1px solid rgba(157, 117, 213, 0.5);
 
     transform: rotateY(180deg);
 }
@@ -1678,7 +1743,7 @@ body.light .topbar {
 .detail-card-number {
     margin-bottom: 15px;
 
-    color: var(--gold);
+    color: var(--primary-light);
 
     font-size: 12px;
 
@@ -1693,16 +1758,12 @@ body.light .topbar {
     font-weight: 500;
 }
 
-/* =========================
-   DETAIL INFORMATION
-========================= */
-
 .detail-information {
     align-self: center;
 }
 
 .card-category {
-    color: var(--gold);
+    color: var(--primary-light);
 
     font-size: 10px;
 
@@ -1719,9 +1780,9 @@ body.light .topbar {
     font-weight: 500;
 }
 
-/* =========================
-   MEANING TABS
-========================= */
+/* ========================================
+   SIGNIFICADOS
+======================================== */
 
 .meaning-tabs {
     display: flex;
@@ -1751,19 +1812,17 @@ body.light .topbar {
 
 .meaning-tab:hover {
     color: var(--text);
+
+    border-color: var(--primary);
 }
 
 .meaning-tab.active {
-    color: var(--gold);
+    color: var(--primary-light);
 
-    border-color: rgba(216, 181, 106, 0.4);
+    border-color: rgba(157, 117, 213, 0.55);
 
-    background: rgba(216, 181, 106, 0.07);
+    background: var(--primary-soft);
 }
-
-/* =========================
-   MEANING CONTENT
-========================= */
 
 .meaning-content {
     color: var(--text-secondary);
@@ -1800,26 +1859,57 @@ body.light .topbar {
 
     border-radius: 20px;
 
-    color: var(--gold);
+    color: var(--primary-light);
 
-    background: var(--violet-soft);
+    background: var(--primary-soft);
 
     border: 1px solid var(--border);
 
     font-size: 10px;
 }
 
-/* =========================
-   UTILITY
-========================= */
+/* ========================================
+   SIN IMAGEN
+======================================== */
+
+.no-image {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: var(--primary-light);
+
+    background:
+        linear-gradient(
+            145deg,
+            #28183a,
+            #100c17
+        );
+
+    font-family: "Cinzel", serif;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    text-align: center;
+}
+
+/* ========================================
+   HIDDEN
+======================================== */
 
 .hidden {
     display: none !important;
 }
 
-/* =========================
-   TABLET
-========================= */
+/* ========================================
+   RESPONSIVE 900px
+======================================== */
 
 @media (max-width: 900px) {
 
@@ -1840,9 +1930,9 @@ body.light .topbar {
     }
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* ========================================
+   RESPONSIVE 700px
+======================================== */
 
 @media (max-width: 700px) {
 
@@ -1867,9 +1957,9 @@ body.light .topbar {
     }
 }
 
-/* =========================
-   SMALL MOBILE
-========================= */
+/* ========================================
+   RESPONSIVE 600px
+======================================== */
 
 @media (max-width: 600px) {
 
@@ -1920,9 +2010,9 @@ body.light .topbar {
     }
 }
 
-/* =========================
-   VERY SMALL MOBILE
-========================= */
+/* ========================================
+   RESPONSIVE 420px
+======================================== */
 
 @media (max-width: 420px) {
 
