@@ -1,13 +1,12 @@
-const API_URL = "https://tarotapi.dev/api/v1/cards";
+// ========================================
+// ARCANA — TAROT LEARNING
+// ========================================
 
-const IMAGE_BASE_URL = "https://petaloverflow.github.io/tarot-api/cards/";
+// API del Tarot
+const API_URL = "https://tarotapi.dev/api/v1/cards";
 
 let tarotCards = [];
 let selectedCard = null;
-
-let selectedNumber = 1;
-let selectedSpread = "line";
-let selectedMode = "random";
 
 
 // ========================================
@@ -24,52 +23,388 @@ async function loadTarotCards() {
 
         const data = await response.json();
 
-        if (Array.isArray(data)) {
-            tarotCards = data;
-        } else if (data.cards && Array.isArray(data.cards)) {
-            tarotCards = data.cards;
-        } else {
-            tarotCards = [];
-        }
+        tarotCards = data.cards || data;
 
         console.log("Cartas cargadas:", tarotCards);
 
         renderLearningCards();
         renderModalCards();
 
-        updateReadingStatus("Preparada");
-
     } catch (error) {
         console.error("Error cargando el tarot:", error);
-        updateReadingStatus("Error al cargar");
+
+        // Si la API falla, mostramos las cartas locales
+        loadLocalCards();
     }
 }
 
 
 // ========================================
-// OBTENER IMAGEN DE CARTA
+// CARTAS LOCALES
+// ========================================
+
+function loadLocalCards() {
+
+    tarotCards = [
+        {
+            name: "The Fool",
+            category: "major",
+            number: "0",
+            meaning: "Nuevos comienzos, libertad, aventura, espontaneidad.",
+            meaning_rev: "Imprudencia, falta de dirección, decisiones impulsivas."
+        },
+
+        {
+            name: "The Magician",
+            category: "major",
+            number: "I",
+            meaning: "Manifestación, habilidad, iniciativa, poder personal.",
+            meaning_rev: "Manipulación, falta de confianza, recursos mal utilizados."
+        },
+
+        {
+            name: "The High Priestess",
+            category: "major",
+            number: "II",
+            meaning: "Intuición, misterio, conocimiento interior y sabiduría.",
+            meaning_rev: "Secretos, confusión, intuición bloqueada."
+        },
+
+        {
+            name: "The Empress",
+            category: "major",
+            number: "III",
+            meaning: "Abundancia, creatividad, naturaleza, crecimiento y fertilidad.",
+            meaning_rev: "Bloqueo creativo, dependencia, falta de cuidado personal."
+        },
+
+        {
+            name: "The Emperor",
+            category: "major",
+            number: "IV",
+            meaning: "Autoridad, estabilidad, estructura, liderazgo.",
+            meaning_rev: "Control excesivo, rigidez, autoritarismo."
+        },
+
+        {
+            name: "The Hierophant",
+            category: "major",
+            number: "V",
+            meaning: "Tradición, enseñanza, espiritualidad, conocimiento.",
+            meaning_rev: "Rebeldía, dogmatismo, cuestionamiento de las tradiciones."
+        },
+
+        {
+            name: "The Lovers",
+            category: "major",
+            number: "VI",
+            meaning: "Unión, decisiones, armonía, valores compartidos.",
+            meaning_rev: "Desacuerdo, conflicto, indecisión."
+        },
+
+        {
+            name: "The Chariot",
+            category: "major",
+            number: "VII",
+            meaning: "Determinación, movimiento, victoria y control.",
+            meaning_rev: "Falta de dirección, obstáculos, pérdida de control."
+        },
+
+        {
+            name: "Strength",
+            category: "major",
+            number: "VIII",
+            meaning: "Valentía, paciencia, compasión y fortaleza interior.",
+            meaning_rev: "Inseguridad, debilidad, falta de confianza."
+        },
+
+        {
+            name: "The Hermit",
+            category: "major",
+            number: "IX",
+            meaning: "Introspección, búsqueda interior, sabiduría y soledad.",
+            meaning_rev: "Aislamiento, soledad excesiva, evasión."
+        },
+
+        {
+            name: "Wheel of Fortune",
+            category: "major",
+            number: "X",
+            meaning: "Cambio, ciclos, destino, oportunidades.",
+            meaning_rev: "Resistencia al cambio, mala suerte temporal, estancamiento."
+        },
+
+        {
+            name: "Justice",
+            category: "major",
+            number: "XI",
+            meaning: "Equilibrio, justicia, verdad y responsabilidad.",
+            meaning_rev: "Injusticia, desequilibrio, falta de responsabilidad."
+        },
+
+        {
+            name: "The Hanged Man",
+            category: "major",
+            number: "XII",
+            meaning: "Pausa, sacrificio, perspectiva y aceptación.",
+            meaning_rev: "Estancamiento, resistencia, falta de progreso."
+        },
+
+        {
+            name: "Death",
+            category: "major",
+            number: "XIII",
+            meaning: "Transformación, finales, renovación y cambio profundo.",
+            meaning_rev: "Resistencia al cambio, apego al pasado."
+        },
+
+        {
+            name: "Temperance",
+            category: "major",
+            number: "XIV",
+            meaning: "Equilibrio, armonía, paciencia y moderación.",
+            meaning_rev: "Desequilibrio, exceso, impaciencia."
+        },
+
+        {
+            name: "The Devil",
+            category: "major",
+            number: "XV",
+            meaning: "Apegos, deseos, tentaciones y materialismo.",
+            meaning_rev: "Liberación, romper cadenas, recuperar el control."
+        },
+
+        {
+            name: "The Tower",
+            category: "major",
+            number: "XVI",
+            meaning: "Cambio repentino, revelación, ruptura y transformación.",
+            meaning_rev: "Resistencia al cambio, miedo, evitar una transformación necesaria."
+        },
+
+        {
+            name: "The Star",
+            category: "major",
+            number: "XVII",
+            meaning: "Esperanza, inspiración, renovación y fe.",
+            meaning_rev: "Desánimo, pérdida de esperanza, inseguridad."
+        },
+
+        {
+            name: "The Moon",
+            category: "major",
+            number: "XVIII",
+            meaning: "Intuición, sueños, misterio y emociones.",
+            meaning_rev: "Confusión, miedo, ilusiones y engaños."
+        },
+
+        {
+            name: "The Sun",
+            category: "major",
+            number: "XIX",
+            meaning: "Alegría, éxito, claridad, vitalidad y felicidad.",
+            meaning_rev: "Falta de claridad, retrasos, optimismo bloqueado."
+        },
+
+        {
+            name: "Judgement",
+            category: "major",
+            number: "XX",
+            meaning: "Renacimiento, reflexión, decisiones y despertar.",
+            meaning_rev: "Dudas, culpa, incapacidad para avanzar."
+        },
+
+        {
+            name: "The World",
+            category: "major",
+            number: "XXI",
+            meaning: "Finalización, éxito, integración y realización.",
+            meaning_rev: "Ciclo incompleto, falta de cierre, estancamiento."
+        }
+    ];
+
+    console.log("Usando cartas locales:", tarotCards);
+
+    renderLearningCards();
+    renderModalCards();
+}
+
+
+// ========================================
+// OBTENER IMAGEN DE LA CARTA
 // ========================================
 
 function getCardImage(card) {
 
-    if (!card) {
-        return "";
-    }
+    const name = getCardName(card);
 
-    if (card.image) {
-        return card.image;
-    }
+    const imageMap = {
 
-    if (card.image_url) {
-        return card.image_url;
-    }
+        "The Fool": "THE FOOL.jpg",
 
-    if (card.imageUrl) {
-        return card.imageUrl;
-    }
+        "The Magician": "THE MAGICIAN.jpg",
 
-    if (card.name_short) {
-        return IMAGE_BASE_URL + card.name_short + ".jpg";
+        "The High Priestess": "THE HIGH PRIESTESS.jpg",
+
+        "The Empress": "THE EMPRESS.jpg",
+
+        "The Emperor": "THE EMPEROR.jpg",
+
+        "The Hierophant": "THE HIEROPHANT.jpg",
+
+        "The Lovers": "THE LOVERS.jpg",
+
+        "The Chariot": "THE CHARIOT.jpg",
+
+        "Fortitude": "STRENGTH.jpg",
+
+        "The Hermit": "THE HERMIT.jpg",
+
+        "Justice": "JUSTICE.jpg",
+
+        "The Hanged Man": "THE HANGED MAN.jpg",
+
+        "Death": "DEATH.jpg",
+
+        "Temperance": "TEMPERANCE.jpg",
+
+        "The Devil": "THE DEVIL.jpg",
+
+        "The Tower": "THE TOWER.jpg",
+
+        "The Star": "THE STAR.jpg",
+
+        "The Moon": "THE MOON.jpg",
+
+        "The Sun": "THE SUN.jpg",
+
+        "The World": "THE WORLD.jpg",
+
+        "Ace of Wands": "waac.jpg",
+
+        "Queen of Wands": "waqu.jpg",
+
+        "Knight of Wands": "waki.jpg",
+
+        "Page of Wands": "wapa.jpg",
+
+        "Two of Wands": "wa02.jpg",
+
+        "Three of Wands": "wa03.jpg",
+
+        "Four of Wands": "wa04.jpg",
+
+        "Five of Wands": "wa05.jpg",
+
+        "Six of Wands": "wa06.jpg",
+
+        "Seven of Wands": "wa07.jpg",
+
+        "Eight of Wands": "wa08.jpg",
+
+        "Nine of Wands": "wa09.jpg",
+
+        "Ten of Wands": "wa10.jpg",
+
+        "Ace of Cups": "cuac.jpg",
+
+        "Queen of Cups": "cuqu.jpg",
+
+        "Knight of Cups": "cuki.jpg",
+
+        "Page of Cups": "cupa.jpg",
+        
+        "Two of Cups": "cu02.jpg",
+
+        "Three of Cups": "cu03.jpg",
+
+        "Four of Cups": "cu04.jpg",
+
+        "Five of Cups": "cu05.jpg",
+
+        "Six of Cups": "cu06.jpg",
+
+        "Seven of Cups": "cu07.jpg",
+
+        "Eight of Cups": "cu08.jpg",
+
+        "Nine of Cups": "cu09.jpg",
+
+        "Ten of Cups": "cu10.jpg",
+
+        "Ace of Swords": "swac.jpg",
+
+        "Queen of Swords": "swqu.jpg",
+
+        "Knight of Swords": "swki.jpg",
+
+        "Page of Swords": "swpa.jpg",
+
+        "Two of Swords": "sw02.jpg",
+
+        "Three of Swords": "sw03.jpg",
+
+        "Four of Swords": "sw04.jpg",
+
+        "Five of Swords": "sw05.jpg",
+
+        "Six of Swords": "sw06.jpg",
+
+        "Seven of Swords": "sw07.jpg",
+
+        "Eight of Swords": "sw08.jpg",
+
+        "Nine of Swords": "sw09.jpg",
+
+        "Ten of Swords": "sw10.jpg",
+
+        "Ace of Pentacles": "peac.jpg",
+
+        "Queen of Pentacles": "pequ.jpg",
+
+        "Knight of Pentacles": "peki.jpg",
+
+        "Page of Pentacles": "pepa.jpg",
+
+        "Two of Pentacles": "pe02.jpg",
+
+        "Three of Pentacles": "pe03.jpg",
+
+        "Four of Pentacles": "pe04.jpg",
+
+        "Five of Pentacles": "pe05.jpg",
+
+        "Six of Pentacles": "pe06.jpg",
+
+        "Seven of Pentacles": "pe07.jpg",
+
+        "Eight of Pentacles": "pe08.jpg",
+
+        "Nine of Pentacles": "pe09.jpg",
+
+        "Ten of Pentacles": "pe10.jpg",
+
+        "King of Wands": "waki.jpg",
+
+        "King of Cups": "cuki.jpg",
+
+        "King of Swords": "swki.jpg",
+        
+        "King of Pentacles": "peki.jpg",
+
+        "Judgement": "ar20.jpg",
+
+        "Wheel of Fortune": "ar10.jpg",
+        
+            
+
+        
+
+        
+    };
+
+    if (imageMap[name]) {
+        return `assets/${imageMap[name]}`;
     }
 
     return "";
@@ -82,94 +417,35 @@ function getCardImage(card) {
 
 function getCardName(card) {
 
-    if (!card) {
-        return "Carta";
-    }
-
     return card.name || "Carta";
+
 }
 
 
 // ========================================
-// OBTENER CATEGORIA
+// OBTENER CATEGORÍA
 // ========================================
 
 function getCardCategory(card) {
 
-    if (!card) {
-        return "TAROT";
+    if (card.category) {
+        return card.category;
     }
 
     if (card.type) {
         return card.type;
     }
 
-    if (card.arcana) {
-        return card.arcana;
-    }
+    return "major";
 
-    if (card.suit) {
-        return card.suit;
-    }
-
-    if (card.name_short && card.name_short.startsWith("ar")) {
-        return "Arcanos Mayores";
-    }
-
-    if (card.name_short && card.name_short.startsWith("wa")) {
-        return "Bastos";
-    }
-
-    if (card.name_short && card.name_short.startsWith("cu")) {
-        return "Copas";
-    }
-
-    if (card.name_short && card.name_short.startsWith("sw")) {
-        return "Espadas";
-    }
-
-    if (card.name_short && card.name_short.startsWith("pe")) {
-        return "Oros";
-    }
-
-    return "TAROT";
 }
 
 
 // ========================================
-// CREAR IMAGEN
+// MODAL PARA SELECCIONAR CARTA
 // ========================================
 
-function createImageHTML(card, className) {
-
-    const image = getCardImage(card);
-    const name = getCardName(card);
-
-    if (!image) {
-        return `
-            <div class="no-image">
-                TAROT
-            </div>
-        `;
-    }
-
-    return `
-        <img
-            class="${className}"
-            src="${image}"
-            alt="${name}"
-            loading="lazy"
-            onerror="this.style.display='none'; this.parentElement.classList.add('image-error');"
-        >
-    `;
-}
-
-
-// ========================================
-// CARTAS DEL MODAL
-// ========================================
-
-function renderModalCards(cardsToRender) {
+function renderModalCards() {
 
     const container = document.getElementById("modalCards");
 
@@ -177,45 +453,42 @@ function renderModalCards(cardsToRender) {
         return;
     }
 
-    const cards = cardsToRender || tarotCards;
-
     container.innerHTML = "";
 
-    if (cards.length === 0) {
-        container.innerHTML = `
-            <div class="empty-search">
-                No se encontraron cartas.
-            </div>
-        `;
-
-        return;
-    }
-
-    cards.forEach(function(card) {
+    tarotCards.forEach(function (card) {
 
         const button = document.createElement("button");
 
         button.className = "selector-card";
-        button.type = "button";
 
-        const imageHTML = createImageHTML(card, "");
+        const image = getCardImage(card);
+        const name = getCardName(card);
 
         button.innerHTML = `
             <div class="selector-card-image">
-                ${imageHTML}
+
+                ${image
+                ? `<img src="${image}" alt="${name}">`
+                : `<div class="no-image">TAROT</div>`
+            }
+
             </div>
 
-            <strong>
-                ${getCardName(card)}
-            </strong>
+            <strong>${name}</strong>
+
+            <small>Arcano Mayor</small>
         `;
 
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
+
             selectCard(card);
+
         });
 
         container.appendChild(button);
+
     });
+
 }
 
 
@@ -223,60 +496,72 @@ function renderModalCards(cardsToRender) {
 // CARTAS DE APRENDIZAJE
 // ========================================
 
-function renderLearningCards(cardsToRender) {
+function renderLearningCards(filter = "all") {
 
-    const container = document.getElementById("learningGrid");
+    const container =
+        document.getElementById("learningGrid");
 
     if (!container) {
         return;
     }
 
-    const cards = cardsToRender || tarotCards;
-
     container.innerHTML = "";
 
-    if (cards.length === 0) {
-        container.innerHTML = `
-            <div class="empty-search">
-                No se encontraron cartas.
-            </div>
-        `;
+    let cardsToShow = tarotCards;
 
-        return;
+    if (filter !== "all") {
+
+        cardsToShow = tarotCards.filter(function (card) {
+
+            return getCardCategory(card) === filter;
+
+        });
+
     }
 
-    cards.forEach(function(card) {
+    cardsToShow.forEach(function (card) {
 
-        const article = document.createElement("article");
+        const article =
+            document.createElement("article");
 
         article.className = "learning-card";
 
-        const imageHTML = createImageHTML(card, "");
+        const image = getCardImage(card);
+        const name = getCardName(card);
 
         article.innerHTML = `
+
             <div class="learning-card-image">
-                ${imageHTML}
+
+                ${image
+                ? `<img src="${image}" alt="${name}">`
+                : `<div class="no-image">TAROT</div>`
+            }
+
             </div>
 
             <div class="learning-card-info">
 
-                <span>
-                    ${getCardCategory(card)}
-                </span>
+                <span>ARCANO MAYOR</span>
 
-                <h4>
-                    ${getCardName(card)}
-                </h4>
+                <h4>${name}</h4>
 
             </div>
+
         `;
 
-        article.addEventListener("click", function() {
+        article.addEventListener("click", function () {
+
+            selectedCard = card;
+
             openCardDetail(card);
+
         });
 
         container.appendChild(article);
+
     });
+
 }
 
 
@@ -288,29 +573,32 @@ function selectCard(card) {
 
     selectedCard = card;
 
-    const modal = document.getElementById("cardModal");
+    const modal =
+        document.getElementById("cardModal");
 
     if (modal) {
+
         modal.classList.remove("active");
+
     }
 
+    console.log("Carta seleccionada:", card);
+
     openCardDetail(card);
+
 }
 
 
 // ========================================
-// ABRIR DETALLE
+// ABRIR DETALLE DE CARTA
 // ========================================
 
 function openCardDetail(card) {
 
-    if (!card) {
-        return;
-    }
-
     selectedCard = card;
 
-    const modal = document.getElementById("detailModal");
+    const modal =
+        document.getElementById("detailModal");
 
     const container =
         document.getElementById("detailCardContainer");
@@ -321,6 +609,9 @@ function openCardDetail(card) {
     const category =
         document.getElementById("detailCategory");
 
+    const meaning =
+        document.getElementById("meaningContent");
+
     if (!modal || !container) {
         return;
     }
@@ -329,64 +620,60 @@ function openCardDetail(card) {
     const name = getCardName(card);
 
     if (title) {
+
         title.textContent = name;
+
     }
 
     if (category) {
-        category.textContent = getCardCategory(card);
+
+        category.textContent =
+            getCardCategory(card) === "major"
+                ? "ARCANO MAYOR"
+                : "TAROT";
+
     }
 
     container.innerHTML = `
-        <div class="detail-tarot-card" id="detailTarotCard">
+
+        <div class="detail-tarot-card">
 
             <div class="detail-tarot-inner">
 
                 <div class="detail-tarot-front">
 
-                    ${
-                        image
-                        ? `
-                            <img
-                                src="${image}"
-                                alt="${name}"
-                            >
-                        `
-                        : `
-                            <div class="no-image">
-                                TAROT
-                            </div>
-                        `
-                    }
+                    ${image
+            ? `<img src="${image}" alt="${name}">`
+            : `<div class="no-image">TAROT</div>`
+        }
 
                 </div>
 
                 <div class="detail-tarot-back">
 
-                    <div class="detail-card-number">
-                        ARCANA
-                    </div>
+                    <span class="detail-card-number">
+                        ARCANO
+                    </span>
 
                     <h4>
                         ${name}
                     </h4>
-
-                    <p>
-                        Haz clic para volver
-                    </p>
 
                 </div>
 
             </div>
 
         </div>
+
     `;
 
+    // Permitir girar la carta
     const detailCard =
-        document.getElementById("detailTarotCard");
+        container.querySelector(".detail-tarot-card");
 
     if (detailCard) {
 
-        detailCard.addEventListener("click", function() {
+        detailCard.addEventListener("click", function () {
 
             detailCard.classList.toggle("flipped");
 
@@ -394,31 +681,22 @@ function openCardDetail(card) {
 
     }
 
-    showMeaning(card, "upright");
+    if (meaning) {
 
-    const uprightTab =
-        document.querySelector(
-            '.meaning-tab[data-meaning="upright"]'
-        );
+        showMeaning(card, "upright");
 
-    const reversedTab =
-        document.querySelector(
-            '.meaning-tab[data-meaning="reversed"]'
-        );
-
-    if (uprightTab) {
-        uprightTab.classList.add("active");
     }
 
-    if (reversedTab) {
-        reversedTab.classList.remove("active");
-    }
-
+    // Activar modal
     modal.classList.add("active");
 
+    // Volver a crear iconos
     if (typeof lucide !== "undefined") {
+
         lucide.createIcons();
+
     }
+
 }
 
 
@@ -431,7 +709,7 @@ function showMeaning(card, type) {
     const container =
         document.getElementById("meaningContent");
 
-    if (!container || !card) {
+    if (!container) {
         return;
     }
 
@@ -456,19 +734,24 @@ function showMeaning(card, type) {
     }
 
     if (Array.isArray(text)) {
+
         text = text.join(", ");
+
     }
 
     container.innerHTML = `
+
         <p>
             ${text}
         </p>
+
     `;
+
 }
 
 
 // ========================================
-// TEMA
+// TEMA CLARO / OSCURO
 // ========================================
 
 function setupTheme() {
@@ -487,12 +770,14 @@ function setupTheme() {
         localStorage.getItem("arcana-theme");
 
     if (savedTheme === "light") {
+
         document.body.classList.add("light");
+
     }
 
     updateThemeIcon();
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
 
         document.body.classList.toggle("light");
 
@@ -523,15 +808,18 @@ function setupTheme() {
         );
 
         if (typeof lucide !== "undefined") {
+
             lucide.createIcons();
+
         }
 
     }
+
 }
 
 
 // ========================================
-// NAVEGACION
+// NAVEGACIÓN
 // ========================================
 
 function setupNavigation() {
@@ -539,12 +827,14 @@ function setupNavigation() {
     const buttons =
         document.querySelectorAll(".nav-button");
 
-    buttons.forEach(function(button) {
+    buttons.forEach(function (button) {
 
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
 
-            buttons.forEach(function(item) {
+            buttons.forEach(function (item) {
+
                 item.classList.remove("active");
+
             });
 
             button.classList.add("active");
@@ -553,19 +843,27 @@ function setupNavigation() {
                 button.dataset.section;
 
             const practice =
-                document.getElementById("practiceSection");
+                document.getElementById(
+                    "practiceSection"
+                );
 
             const learn =
-                document.getElementById("learnSection");
+                document.getElementById(
+                    "learnSection"
+                );
 
             if (section === "practice") {
 
                 if (practice) {
+
                     practice.classList.remove("hidden");
+
                 }
 
                 if (learn) {
+
                     learn.classList.add("hidden");
+
                 }
 
             }
@@ -573,461 +871,23 @@ function setupNavigation() {
             if (section === "learn") {
 
                 if (practice) {
+
                     practice.classList.add("hidden");
+
                 }
 
                 if (learn) {
+
                     learn.classList.remove("hidden");
-                }
-
-            }
-
-        });
-
-    });
-}
-
-
-// ========================================
-// NUMERO DE CARTAS
-// ========================================
-
-function setupNumberOptions() {
-
-    const options =
-        document.querySelectorAll(".number-option");
-
-    options.forEach(function(option) {
-
-        option.addEventListener("click", function() {
-
-            options.forEach(function(item) {
-                item.classList.remove("active");
-            });
-
-            option.classList.add("active");
-
-            selectedNumber =
-                parseInt(option.dataset.number, 10);
-
-            updateReadingStatus(
-                selectedNumber + " carta" +
-                (selectedNumber === 1 ? "" : "s") +
-                " seleccionada"
-            );
-
-        });
-
-    });
-}
-
-
-// ========================================
-// TIPOS DE TIRADA
-// ========================================
-
-function setupSpreadOptions() {
-
-    const options =
-        document.querySelectorAll(".spread-option");
-
-    options.forEach(function(option) {
-
-        option.addEventListener("click", function() {
-
-            options.forEach(function(item) {
-                item.classList.remove("active");
-            });
-
-            option.classList.add("active");
-
-            selectedSpread =
-                option.dataset.spread;
-
-            updateSpreadClass();
-
-        });
-
-    });
-}
-
-
-// ========================================
-// ACTUALIZAR POSICION
-// ========================================
-
-function updateSpreadClass() {
-
-    const cardsArea =
-        document.getElementById("cardsArea");
-
-    if (!cardsArea) {
-        return;
-    }
-
-    cardsArea.classList.remove(
-        "spread-line",
-        "spread-vertical",
-        "spread-triangle",
-        "spread-cross"
-    );
-
-    cardsArea.classList.add(
-        "spread-" + selectedSpread
-    );
-}
-
-
-// ========================================
-// MODO DE SELECCION
-// ========================================
-
-function setupSelectionMode() {
-
-    const options =
-        document.querySelectorAll(
-            ".selection-mode-option"
-        );
-
-    options.forEach(function(option) {
-
-        option.addEventListener("click", function() {
-
-            options.forEach(function(item) {
-                item.classList.remove("active");
-            });
-
-            option.classList.add("active");
-
-            selectedMode =
-                option.dataset.mode;
-
-            updateReadingStatus(
-                selectedMode === "random"
-                ? "Tirada automatica"
-                : "Seleccion manual"
-            );
-
-            renderEmptyCards();
-
-        });
-
-    });
-}
-
-
-// ========================================
-// CARTAS VACIAS
-// ========================================
-
-function renderEmptyCards() {
-
-    const cardsArea =
-        document.getElementById("cardsArea");
-
-    if (!cardsArea) {
-        return;
-    }
-
-    cardsArea.innerHTML = "";
-
-    for (let i = 0; i < selectedNumber; i++) {
-
-        const slot =
-            document.createElement("div");
-
-        slot.className = "tarot-slot";
-
-        const emptyCard =
-            document.createElement("div");
-
-        emptyCard.className = "empty-card";
-
-        emptyCard.innerHTML = `
-            <div class="empty-card-plus">
-                <i data-lucide="plus"></i>
-            </div>
-        `;
-
-        emptyCard.addEventListener(
-            "click",
-            function() {
-
-                if (selectedMode === "manual") {
-
-                    openCardSelector();
 
                 }
 
             }
-        );
 
-        slot.appendChild(emptyCard);
-
-        cardsArea.appendChild(slot);
-    }
-
-    if (typeof lucide !== "undefined") {
-        lucide.createIcons();
-    }
-}
-
-
-// ========================================
-// SACAR CARTAS ALEATORIAS
-// ========================================
-
-function drawCards() {
-
-    if (!tarotCards.length) {
-        updateReadingStatus("No hay cartas");
-        return;
-    }
-
-    const cardsArea =
-        document.getElementById("cardsArea");
-
-    if (!cardsArea) {
-        return;
-    }
-
-    const shuffled =
-        [...tarotCards].sort(
-            () => Math.random() - 0.5
-        );
-
-    const selected =
-        shuffled.slice(
-            0,
-            Math.min(selectedNumber, tarotCards.length)
-        );
-
-    cardsArea.innerHTML = "";
-
-    selected.forEach(function(card, index) {
-
-        const slot =
-            document.createElement("div");
-
-        slot.className = "tarot-slot";
-
-        const cardElement =
-            document.createElement("div");
-
-        cardElement.className = "tarot-card";
-
-        const image =
-            getCardImage(card);
-
-        const name =
-            getCardName(card);
-
-        cardElement.innerHTML = `
-            <div class="tarot-card-inner">
-
-                <div class="tarot-card-front">
-
-                    ${
-                        image
-                        ? `
-                            <img
-                                class="tarot-image"
-                                src="${image}"
-                                alt="${name}"
-                            >
-                        `
-                        : `
-                            <div class="no-image">
-                                TAROT
-                            </div>
-                        `
-                    }
-
-                </div>
-
-                <div class="tarot-card-back">
-
-                    <div class="selected-card-name">
-                        ${name}
-                    </div>
-
-                    <div class="selected-card-position">
-                        Carta ${index + 1}
-                    </div>
-
-                    <div class="selected-card-action">
-                        Haz clic para ver
-                    </div>
-
-                </div>
-
-            </div>
-        `;
-
-        cardElement.addEventListener(
-            "click",
-            function() {
-
-                cardElement.classList.toggle("flipped");
-
-            }
-        );
-
-        cardElement.addEventListener(
-            "dblclick",
-            function() {
-
-                openCardDetail(card);
-
-            }
-        );
-
-        slot.appendChild(cardElement);
-
-        cardsArea.appendChild(slot);
+        });
 
     });
 
-    updateReadingStatus(
-        selected.length +
-        " carta" +
-        (selected.length === 1 ? "" : "s") +
-        " seleccionada" +
-        (selected.length === 1 ? "" : "s")
-    );
-}
-
-
-// ========================================
-// BOTON SACAR CARTAS
-// ========================================
-
-function setupDrawButton() {
-
-    const button =
-        document.getElementById("drawButton");
-
-    if (!button) {
-        return;
-    }
-
-    button.addEventListener(
-        "click",
-        function() {
-
-            if (selectedMode === "random") {
-
-                drawCards();
-
-            } else {
-
-                openCardSelector();
-
-            }
-
-        }
-    );
-}
-
-
-// ========================================
-// ABRIR SELECTOR
-// ========================================
-
-function openCardSelector() {
-
-    const modal =
-        document.getElementById("cardModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.add("active");
-
-}
-
-
-// ========================================
-// REINICIAR
-// ========================================
-
-function setupResetButton() {
-
-    const button =
-        document.getElementById("resetButton");
-
-    if (!button) {
-        return;
-    }
-
-    button.addEventListener(
-        "click",
-        function() {
-
-            selectedNumber = 1;
-            selectedSpread = "line";
-            selectedMode = "random";
-
-            document.querySelectorAll(
-                ".number-option"
-            ).forEach(function(item) {
-
-                item.classList.remove("active");
-
-            });
-
-            const numberOne =
-                document.querySelector(
-                    '.number-option[data-number="1"]'
-                );
-
-            if (numberOne) {
-                numberOne.classList.add("active");
-            }
-
-            document.querySelectorAll(
-                ".spread-option"
-            ).forEach(function(item) {
-
-                item.classList.remove("active");
-
-            });
-
-            const lineOption =
-                document.querySelector(
-                    '.spread-option[data-spread="line"]'
-                );
-
-            if (lineOption) {
-                lineOption.classList.add("active");
-            }
-
-            document.querySelectorAll(
-                ".selection-mode-option"
-            ).forEach(function(item) {
-
-                item.classList.remove("active");
-
-            });
-
-            const randomOption =
-                document.querySelector(
-                    '.selection-mode-option[data-mode="random"]'
-                );
-
-            if (randomOption) {
-                randomOption.classList.add("active");
-            }
-
-            updateSpreadClass();
-
-            renderEmptyCards();
-
-            updateReadingStatus("Preparada");
-
-        }
-    );
 }
 
 
@@ -1047,7 +907,7 @@ function setupDetailModal() {
 
         closeButton.addEventListener(
             "click",
-            function() {
+            function () {
 
                 modal.classList.remove("active");
 
@@ -1060,7 +920,7 @@ function setupDetailModal() {
 
         modal.addEventListener(
             "click",
-            function(event) {
+            function (event) {
 
                 if (event.target === modal) {
 
@@ -1072,11 +932,12 @@ function setupDetailModal() {
         );
 
     }
+
 }
 
 
 // ========================================
-// MODAL DE SELECCION
+// MODAL DE SELECCIÓN
 // ========================================
 
 function setupCardModal() {
@@ -1091,7 +952,7 @@ function setupCardModal() {
 
         closeButton.addEventListener(
             "click",
-            function() {
+            function () {
 
                 modal.classList.remove("active");
 
@@ -1104,7 +965,7 @@ function setupCardModal() {
 
         modal.addEventListener(
             "click",
-            function(event) {
+            function (event) {
 
                 if (event.target === modal) {
 
@@ -1116,160 +977,34 @@ function setupCardModal() {
         );
 
     }
+
 }
 
 
 // ========================================
-// BUSQUEDA DE CARTAS
-// ========================================
-
-function setupCardSearch() {
-
-    const input =
-        document.getElementById("cardSearch");
-
-    if (!input) {
-        return;
-    }
-
-    input.addEventListener(
-        "input",
-        function() {
-
-            const search =
-                input.value
-                    .toLowerCase()
-                    .trim();
-
-            if (!search) {
-
-                renderModalCards();
-
-                return;
-
-            }
-
-            const filtered =
-                tarotCards.filter(
-                    function(card) {
-
-                        return getCardName(card)
-                            .toLowerCase()
-                            .includes(search);
-
-                    }
-                );
-
-            renderModalCards(filtered);
-
-        }
-    );
-}
-
-
-// ========================================
-// FILTROS DE APRENDIZAJE
-// ========================================
-
-function setupCategoryFilters() {
-
-    const filters =
-        document.querySelectorAll(
-            ".category-filter"
-        );
-
-    filters.forEach(function(filter) {
-
-        filter.addEventListener(
-            "click",
-            function() {
-
-                filters.forEach(
-                    function(item) {
-                        item.classList.remove("active");
-                    }
-                );
-
-                filter.classList.add("active");
-
-                const category =
-                    filter.dataset.category;
-
-                if (category === "all") {
-
-                    renderLearningCards();
-
-                    return;
-
-                }
-
-                const filtered =
-                    tarotCards.filter(
-                        function(card) {
-
-                            const short =
-                                card.name_short || "";
-
-                            if (category === "major") {
-                                return short.startsWith("ar");
-                            }
-
-                            if (category === "wands") {
-                                return short.startsWith("wa");
-                            }
-
-                            if (category === "cups") {
-                                return short.startsWith("cu");
-                            }
-
-                            if (category === "swords") {
-                                return short.startsWith("sw");
-                            }
-
-                            if (category === "pentacles") {
-                                return short.startsWith("pe");
-                            }
-
-                            return true;
-
-                        }
-                    );
-
-                renderLearningCards(filtered);
-
-            }
-        );
-
-    });
-}
-
-
-// ========================================
-// TABS NORMAL / INVERTIDA
+// TABS DE SIGNIFICADO
 // ========================================
 
 function setupMeaningTabs() {
 
     const tabs =
-        document.querySelectorAll(
-            ".meaning-tab"
-        );
+        document.querySelectorAll(".meaning-tab");
 
-    tabs.forEach(function(tab) {
+    tabs.forEach(function (tab) {
 
         tab.addEventListener(
             "click",
-            function() {
+            function () {
 
                 if (!selectedCard) {
                     return;
                 }
 
-                tabs.forEach(
-                    function(item) {
-                        item.classList.remove("active");
-                    }
-                );
+                tabs.forEach(function (item) {
+
+                    item.classList.remove("active");
+
+                });
 
                 tab.classList.add("active");
 
@@ -1285,56 +1020,373 @@ function setupMeaningTabs() {
         );
 
     });
+
 }
 
 
 // ========================================
-// ESTADO DE LECTURA
+// FILTROS DE CATEGORÍA
 // ========================================
 
-function updateReadingStatus(text) {
+function setupCategoryFilters() {
+
+    const filters =
+        document.querySelectorAll(".category-filter");
+
+    filters.forEach(function (filter) {
+
+        filter.addEventListener(
+            "click",
+            function () {
+
+                filters.forEach(function (item) {
+
+                    item.classList.remove("active");
+
+                });
+
+                filter.classList.add("active");
+
+                const category =
+                    filter.dataset.category;
+
+                renderLearningCards(category);
+
+            }
+        );
+
+    });
+
+}
+
+
+// ========================================
+// BUSCADOR DEL MODAL
+// ========================================
+
+function setupCardSearch() {
+
+    const searchInput =
+        document.getElementById("cardSearch");
+
+    if (!searchInput) {
+        return;
+    }
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            const query =
+                searchInput.value
+                    .toLowerCase()
+                    .trim();
+
+            const cards =
+                document.querySelectorAll(".selector-card");
+
+            cards.forEach(function (cardElement) {
+
+                const name =
+                    cardElement
+                        .querySelector("strong")
+                        ?.textContent
+                        .toLowerCase() || "";
+
+                if (name.includes(query)) {
+
+                    cardElement.style.display = "";
+
+                } else {
+
+                    cardElement.style.display = "none";
+
+                }
+
+            });
+
+        }
+    );
+
+}
+
+
+// ========================================
+// CONFIGURACIÓN DE NÚMERO DE CARTAS
+// ========================================
+
+function setupNumberOptions() {
+
+    const options =
+        document.querySelectorAll(".number-option");
+
+    options.forEach(function (option) {
+
+        option.addEventListener(
+            "click",
+            function () {
+
+                options.forEach(function (item) {
+
+                    item.classList.remove("active");
+
+                });
+
+                option.classList.add("active");
+
+                console.log(
+                    "Número de cartas:",
+                    option.dataset.number
+                );
+
+            }
+        );
+
+    });
+
+}
+
+
+// ========================================
+// CONFIGURACIÓN DE TIRADA
+// ========================================
+
+function setupSpreadOptions() {
+
+    const options =
+        document.querySelectorAll(".spread-option");
+
+    const cardsArea =
+        document.getElementById("cardsArea");
+
+    if (!cardsArea) {
+        return;
+    }
+
+    options.forEach(function (option) {
+
+        option.addEventListener(
+            "click",
+            function () {
+
+                options.forEach(function (item) {
+
+                    item.classList.remove("active");
+
+                });
+
+                option.classList.add("active");
+
+                const spread =
+                    option.dataset.spread;
+
+                cardsArea.className =
+                    `cards-area spread-${spread}`;
+
+            }
+        );
+
+    });
+
+}
+
+
+// ========================================
+// MODO DE SELECCIÓN
+// ========================================
+
+function setupSelectionMode() {
+
+    const options =
+        document.querySelectorAll(
+            ".selection-mode-option"
+        );
+
+    options.forEach(function (option) {
+
+        option.addEventListener(
+            "click",
+            function () {
+
+                options.forEach(function (item) {
+
+                    item.classList.remove("active");
+
+                });
+
+                option.classList.add("active");
+
+                console.log(
+                    "Modo:",
+                    option.dataset.mode
+                );
+
+            }
+        );
+
+    });
+
+}
+
+
+// ========================================
+// SACAR CARTAS
+// ========================================
+
+function setupDrawButton() {
+
+    const drawButton =
+        document.getElementById("drawButton");
+
+    const resetButton =
+        document.getElementById("resetButton");
+
+    const cardsArea =
+        document.getElementById("cardsArea");
 
     const status =
         document.getElementById("readingStatus");
 
-    if (!status) {
+    if (!drawButton || !cardsArea) {
         return;
     }
 
-    status.textContent = text;
-}
+    drawButton.addEventListener(
+        "click",
+        function () {
 
+            if (tarotCards.length === 0) {
+                return;
+            }
 
-// ========================================
-// TECLADO
-// ========================================
+            const numberButton =
+                document.querySelector(
+                    ".number-option.active"
+                );
 
-function setupKeyboard() {
+            const number =
+                numberButton
+                    ? parseInt(
+                        numberButton.dataset.number
+                    )
+                    : 1;
 
-    document.addEventListener(
-        "keydown",
-        function(event) {
+            const shuffled =
+                [...tarotCards]
+                    .sort(
+                        () => Math.random() - 0.5
+                    )
+                    .slice(0, number);
 
-            if (event.key === "Escape") {
+            cardsArea.innerHTML = "";
 
-                const cardModal =
-                    document.getElementById("cardModal");
+            shuffled.forEach(function (card) {
 
-                const detailModal =
-                    document.getElementById("detailModal");
+                const slot =
+                    document.createElement("div");
 
-                if (cardModal) {
-                    cardModal.classList.remove("active");
-                }
+                slot.className = "tarot-slot";
 
-                if (detailModal) {
-                    detailModal.classList.remove("active");
-                }
+                const image =
+                    getCardImage(card);
+
+                const name =
+                    getCardName(card);
+
+                slot.innerHTML = `
+
+                    <div class="tarot-card">
+
+                        <div class="tarot-card-inner">
+
+                            <div class="tarot-card-front">
+
+                                ${image
+                        ? `<img
+                                        class="tarot-image"
+                                        src="${image}"
+                                        alt="${name}"
+                                      >`
+                        : `<div class="no-image">
+                                        TAROT
+                                      </div>`
+                    }
+
+                            </div>
+
+                            <div class="tarot-card-back">
+
+                                <div class="selected-card-name">
+                                    ${name}
+                                </div>
+
+                                <div class="selected-card-position">
+                                    CARTA SELECCIONADA
+                                </div>
+
+                                <div class="selected-card-action">
+                                    Haz clic para girar
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+                const tarotCard =
+                    slot.querySelector(".tarot-card");
+
+                tarotCard.addEventListener(
+                    "click",
+                    function () {
+
+                        tarotCard.classList.toggle(
+                            "flipped"
+                        );
+
+                    }
+                );
+
+                cardsArea.appendChild(slot);
+
+            });
+
+            if (status) {
+
+                status.textContent =
+                    `${number} carta${number > 1 ? "s" : ""} seleccionada${number > 1 ? "s" : ""}`;
 
             }
 
         }
     );
+
+
+    // REINICIAR
+
+    if (resetButton) {
+
+        resetButton.addEventListener(
+            "click",
+            function () {
+
+                cardsArea.innerHTML = "";
+
+                if (status) {
+
+                    status.textContent =
+                        "Preparada";
+
+                }
+
+            }
+        );
+
+    }
+
 }
 
 
@@ -1344,11 +1396,21 @@ function setupKeyboard() {
 
 document.addEventListener(
     "DOMContentLoaded",
-    function() {
+    function () {
 
         setupTheme();
 
         setupNavigation();
+
+        setupDetailModal();
+
+        setupCardModal();
+
+        setupMeaningTabs();
+
+        setupCategoryFilters();
+
+        setupCardSearch();
 
         setupNumberOptions();
 
@@ -1358,26 +1420,12 @@ document.addEventListener(
 
         setupDrawButton();
 
-        setupResetButton();
-
-        setupDetailModal();
-
-        setupCardModal();
-
-        setupCardSearch();
-
-        setupCategoryFilters();
-
-        setupMeaningTabs();
-
-        setupKeyboard();
-
-        renderEmptyCards();
-
         loadTarotCards();
 
         if (typeof lucide !== "undefined") {
+
             lucide.createIcons();
+
         }
 
     }
