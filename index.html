@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Arcana - Tarot Learning</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="background-effects">
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="stars"></div>
+    </div>
+
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-symbol">
+                <i data-lucide="sparkles"></i>
+            </div>
+
+            <div class="brand-text">
+                <h1>ARCANA</h1>
+                <span>Tarot Learning</span>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+
+            <button
+                class="nav-button active"
+                data-section="practice"
+            >
+                <i data-lucide="layers"></i>
+                <span>Practica</span>
+            </button>
+
+            <button
+                class="nav-button"
+                data-section="learn"
+            >
+                <i data-lucide="book-open"></i>
+                <span>Aprender</span>
+            </button>
+
+        </nav>
+
+        <button
+            class="theme-button"
+            id="themeToggle"
+            aria-label="Cambiar tema"
+        >
+            <i data-lucide="moon" id="themeIcon"></i>
+        </button>
+
+    </header>
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="eyebrow">
+                    <i data-lucide="sparkle"></i>
+                    INTERACTIVE TAROT
+                </span>
+
+                <h2>
+                    Aprende a leer
+                    <span>los Arcanos</span>
+                </h2>
+
+                <p>
+                    Explora los significados de las cartas,
+                    practica diferentes posiciones y descubre
+                    como cambia su interpretacion cuando
+                    aparecen invertidas.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section
+            class="practice-section"
+            id="practiceSection"
+        >
+
+            <div class="configuration-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="section-label">01</span>
+
+                        <h3>
+                            Configura tu practica
+                        </h3>
+
+                        <p>
+                            Elige como quieres trabajar
+                            con las cartas.
+                        </p>
+                    </div>
+
+                    <i data-lucide="sliders-horizontal"></i>
+
+                </div>
+
+                <div class="config-group">
+
+                    <label>
+                        Numero de cartas
+                    </label>
+
+                    <div class="number-options">
+
+                        <button
+                            class="number-option active"
+                            data-number="1"
+                        >
+                            1
+                        </button>
+
+                        <button
+                            class="number-option"
+                            data-number="2"
+                        >
+                            2
+                        </button>
+
+                        <button
+                            class="number-option"
+                            data-number="3"
+                        >
+                            3
+                        </button>
+
+                        <button
+                            class="number-option"
+                            data-number="5"
+                        >
+                            5
+                        </button>
+
+                        <button
+                            class="number-option"
+                            data-number="7"
+                        >
+                            7
+                        </button>
+
+                        <button
+                            class="number-option"
+                            data-number="10"
+                        >
+                            10
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="config-group">
+
+                    <label>
+                        Posicion de las cartas
+                    </label>
+
+                    <div class="spread-options">
+
+                        <button
+                            class="spread-option active"
+                            data-spread="line"
+                        >
+                            <div class="spread-icon">
+                                <i data-lucide="minus"></i>
+                            </div>
+
+                            <div>
+                                <strong>Linea</strong>
+                                <span>Secuencia horizontal</span>
+                            </div>
+                        </button>
+
+                        <button
+                            class="spread-option"
+                            data-spread="vertical"
+                        >
+                            <div class="spread-icon">
+                                <i data-lucide="ellipsis-vertical"></i>
+                            </div>
+
+                            <div>
+                                <strong>Vertical</strong>
+                                <span>Secuencia vertical</span>
+                            </div>
+                        </button>
+
+                        <button
+                            class="spread-option"
+                            data-spread="triangle"
+                        >
+                            <div class="spread-icon">
+                                <i data-lucide="triangle"></i>
+                            </div>
+
+                            <div>
+                                <strong>Triangulo</strong>
+                                <span>Distribucion triangular</span>
+                            </div>
+                        </button>
+
+                        <button
+                            class="spread-option"
+                            data-spread="cross"
+                        >
+                            <div class="spread-icon">
+                                <i data-lucide="plus"></i>
+                            </div>
+
+                            <div>
+                                <strong>Cruz</strong>
+                                <span>Distribucion cruzada</span>
+                            </div>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="config-group">
+
+                    <label>
+                        Metodo de seleccion
+                    </label>
+
+                    <div class="selection-mode">
+
+                        <button
+                            class="selection-mode-option active"
+                            data-mode="random"
+                        >
+                            <i data-lucide="shuffle"></i>
+
+                            <div>
+                                <strong>
+                                    Tirada automatica
+                                </strong>
+
+                                <span>
+                                    La aplicacion selecciona
+                                    las cartas
+                                </span>
+                            </div>
+                        </button>
+
+                        <button
+                            class="selection-mode-option"
+                            data-mode="manual"
+                        >
+                            <i data-lucide="plus-circle"></i>
+
+                            <div>
+                                <strong>
+                                    Cartas vacias
+                                </strong>
+
+                                <span>
+                                    Coloca las cartas
+                                    manualmente
+                                </span>
+                            </div>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="reading-area">
+
+                <div class="reading-header">
+
+                    <div>
+                        <span class="section-label">02</span>
+
+                        <h3>
+                            Tu tirada
+                        </h3>
+                    </div>
+
+                    <span
+                        class="reading-status"
+                        id="readingStatus"
+                    >
+                        Preparada
+                    </span>
+
+                </div>
+
+                <div
+                    class="cards-area spread-line"
+                    id="cardsArea"
+                ></div>
+
+                <div class="reading-actions">
+
+                    <button
+                        class="primary-button"
+                        id="drawButton"
+                    >
+                        <i data-lucide="sparkles"></i>
+                        <span>Sacar cartas</span>
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        id="resetButton"
+                    >
+                        <i data-lucide="rotate-ccw"></i>
+                        <span>Reiniciar</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section
+            class="learning-section hidden"
+            id="learnSection"
+        >
+
+            <div class="learning-header">
+
+                <span class="eyebrow">
+                    <i data-lucide="book-open"></i>
+                    TAROT ATLAS
+                </span>
+
+                <h2>
+                    Explora los
+                    <span>Arcanos</span>
+                </h2>
+
+                <p>
+                    Estudia cada carta y descubre como
+                    cambia su significado entre la posicion
+                    normal y la invertida.
+                </p>
+
+            </div>
+
+            <div class="category-filters">
+
+                <button
+                    class="category-filter active"
+                    data-category="all"
+                >
+                    Todas
+                </button>
+
+                <button
+                    class="category-filter"
+                    data-category="major"
+                >
+                    Arcanos Mayores
+                </button>
+
+                <button
+                    class="category-filter"
+                    data-category="wands"
+                >
+                    Bastos
+                </button>
+
+                <button
+                    class="category-filter"
+                    data-category="cups"
+                >
+                    Copas
+                </button>
+
+                <button
+                    class="category-filter"
+                    data-category="swords"
+                >
+                    Espadas
+                </button>
+
+                <button
+                    class="category-filter"
+                    data-category="pentacles"
+                >
+                    Oros
+                </button>
+
+            </div>
+
+            <div
+                class="learning-grid"
+                id="learningGrid"
+            ></div>
+
+        </section>
+
+    </main>
+
+    <div
+        class="modal-overlay"
+        id="cardModal"
+    >
+
+        <div class="card-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <span class="section-label">
+                        SELECCIONAR
+                    </span>
+
+                    <h3>
+                        Elige una carta
+                    </h3>
+                </div>
+
+                <button
+                    class="close-modal"
+                    id="closeModal"
+                    aria-label="Cerrar"
+                >
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+            <div class="modal-search">
+
+                <i data-lucide="search"></i>
+
+                <input
+                    type="text"
+                    id="cardSearch"
+                    placeholder="Buscar carta..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+            <div
+                class="modal-cards"
+                id="modalCards"
+            ></div>
+
+        </div>
+
+    </div>
+
+    <div
+        class="modal-overlay"
+        id="detailModal"
+    >
+
+        <div class="detail-modal">
+
+            <button
+                class="close-modal detail-close"
+                id="closeDetail"
+                aria-label="Cerrar"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+            <div
+                class="detail-card-container"
+                id="detailCardContainer"
+            ></div>
+
+            <div class="detail-information">
+
+                <span
+                    class="card-category"
+                    id="detailCategory"
+                >
+                    ARCANO
+                </span>
+
+                <h3 id="detailTitle">
+                    -
+                </h3>
+
+                <div class="meaning-tabs">
+
+                    <button
+                        class="meaning-tab active"
+                        data-meaning="upright"
+                    >
+                        Normal
+                    </button>
+
+                    <button
+                        class="meaning-tab"
+                        data-meaning="reversed"
+                    >
+                        Invertida
+                    </button>
+
+                </div>
+
+                <div
+                    class="meaning-content"
+                    id="meaningContent"
+                >
+                    <p>
+                        Selecciona una carta para conocer
+                        su significado.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>
