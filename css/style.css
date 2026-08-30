@@ -5,20 +5,30 @@
     --surface-solid: #17121f;
     --surface-soft: rgba(255, 255, 255, 0.045);
     --border: rgba(255, 255, 255, 0.09);
+
     --text: #f5f1f7;
     --text-secondary: #aaa1b4;
     --text-muted: #766d7e;
+
     --gold: #d8b56a;
     --gold-light: #f1d994;
+
     --violet: #9d75d5;
     --violet-dark: #62428f;
     --violet-soft: rgba(157, 117, 213, 0.15);
+
     --shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+
     --radius-lg: 28px;
     --radius-md: 18px;
     --radius-sm: 12px;
+
     --transition: 0.3s ease;
 }
+
+/* =========================
+   LIGHT MODE
+========================= */
 
 body.light {
     --bg: #f5f0f7;
@@ -27,16 +37,24 @@ body.light {
     --surface-solid: #ffffff;
     --surface-soft: rgba(70, 35, 90, 0.045);
     --border: rgba(55, 30, 70, 0.1);
+
     --text: #201827;
     --text-secondary: #6d6274;
     --text-muted: #958a9a;
+
     --gold: #9d7021;
     --gold-light: #b9862d;
+
     --violet: #7550a7;
     --violet-dark: #573581;
     --violet-soft: rgba(117, 80, 167, 0.1);
+
     --shadow: 0 20px 55px rgba(55, 30, 70, 0.12);
 }
+
+/* =========================
+   RESET
+========================= */
 
 * {
     margin: 0;
@@ -50,6 +68,7 @@ html {
 
 body {
     min-height: 100vh;
+
     background:
         radial-gradient(
             circle at 10% 5%,
@@ -67,17 +86,25 @@ body {
             transparent 35%
         ),
         var(--bg);
+
     color: var(--text);
+
     font-family: "Inter", sans-serif;
+
     transition:
         background var(--transition),
         color var(--transition);
+
     overflow-x: hidden;
 }
 
 button {
     font-family: inherit;
 }
+
+/* =========================
+   BACKGROUND
+========================= */
 
 .background-effects {
     position: fixed;
@@ -112,34 +139,51 @@ button {
     position: absolute;
     inset: 0;
     opacity: 0.25;
+
     background-image:
         radial-gradient(
             circle,
             rgba(255, 255, 255, 0.7) 1px,
             transparent 1px
         );
+
     background-size: 90px 90px;
 }
 
+/* =========================
+   TOPBAR
+========================= */
+
 .topbar {
     height: 82px;
+
     position: sticky;
     top: 0;
     z-index: 100;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: 0 6%;
+
     border-bottom: 1px solid var(--border);
+
     background: rgba(9, 7, 13, 0.65);
+
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
+
     transition: var(--transition);
 }
 
 body.light .topbar {
     background: rgba(255, 255, 255, 0.7);
 }
+
+/* =========================
+   BRAND
+========================= */
 
 .brand {
     display: flex;
@@ -150,11 +194,16 @@ body.light .topbar {
 .brand-symbol {
     width: 43px;
     height: 43px;
+
     display: grid;
     place-items: center;
+
     border-radius: 14px;
+
     color: var(--gold);
+
     background: var(--violet-soft);
+
     border: 1px solid var(--border);
 }
 
@@ -172,11 +221,18 @@ body.light .topbar {
 
 .brand span {
     display: block;
+
     margin-top: 2px;
+
     color: var(--text-muted);
+
     font-size: 9px;
     letter-spacing: 2px;
 }
+
+/* =========================
+   NAVIGATION
+========================= */
 
 .main-nav {
     display: flex;
@@ -188,13 +244,19 @@ body.light .topbar {
     display: flex;
     align-items: center;
     gap: 8px;
+
     padding: 10px 16px;
+
     border: 1px solid transparent;
     border-radius: 12px;
+
     color: var(--text-secondary);
     background: transparent;
+
     font-size: 12px;
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -210,20 +272,32 @@ body.light .topbar {
 
 .nav-button.active {
     color: var(--gold-light);
+
     border-color: var(--border);
+
     background: var(--surface-soft);
 }
+
+/* =========================
+   THEME BUTTON
+========================= */
 
 .theme-button {
     width: 43px;
     height: 43px;
+
     display: grid;
     place-items: center;
+
     border-radius: 13px;
+
     border: 1px solid var(--border);
+
     color: var(--text-secondary);
     background: var(--surface-soft);
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -237,10 +311,17 @@ body.light .topbar {
     height: 18px;
 }
 
+/* =========================
+   HERO
+========================= */
+
 .hero {
     max-width: 1100px;
+
     margin: 0 auto;
+
     padding: 105px 30px 70px;
+
     text-align: center;
 }
 
@@ -253,7 +334,9 @@ body.light .topbar {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+
     color: var(--gold);
+
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 3px;
@@ -266,83 +349,124 @@ body.light .topbar {
 
 .hero h2 {
     max-width: 850px;
+
     margin: 20px auto;
+
     font-family: "Cinzel", serif;
+
     font-size: clamp(42px, 7vw, 78px);
+
     line-height: 1.05;
+
     font-weight: 500;
+
     letter-spacing: -2px;
 }
 
 .hero h2 span {
     display: block;
+
     color: var(--gold);
-    text-shadow: 0 0 35px rgba(216, 181, 106, 0.08);
+
+    text-shadow:
+        0 0 35px rgba(216, 181, 106, 0.08);
 }
 
 .hero p {
     max-width: 650px;
+
     margin: 0 auto;
+
     color: var(--text-secondary);
+
     font-size: 15px;
+
     line-height: 1.8;
 }
 
+/* =========================
+   PRACTICE SECTION
+========================= */
+
 .practice-section {
     max-width: 1150px;
+
     margin: 0 auto;
+
     padding: 20px 30px 100px;
 }
 
 .configuration-panel,
 .reading-area {
     border: 1px solid var(--border);
+
     background: var(--surface);
+
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
+
     border-radius: var(--radius-lg);
+
     box-shadow: var(--shadow);
 }
 
 .configuration-panel {
     padding: 32px;
+
     margin-bottom: 25px;
 }
+
+/* =========================
+   PANEL HEADING
+========================= */
 
 .panel-heading,
 .reading-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+
     margin-bottom: 35px;
 }
 
 .panel-heading > svg {
     width: 22px;
     height: 22px;
+
     color: var(--gold);
 }
 
 .section-label {
     color: var(--gold);
+
     font-size: 10px;
     font-weight: 600;
+
     letter-spacing: 3px;
 }
 
 .panel-heading h3,
 .reading-header h3 {
     margin-top: 5px;
+
     font-family: "Cinzel", serif;
+
     font-size: 23px;
+
     font-weight: 500;
 }
 
 .panel-heading p {
     margin-top: 7px;
+
     color: var(--text-secondary);
+
     font-size: 13px;
 }
+
+/* =========================
+   CONFIGURATION
+========================= */
 
 .config-group {
     margin-top: 30px;
@@ -350,11 +474,18 @@ body.light .topbar {
 
 .config-group > label {
     display: block;
+
     margin-bottom: 13px;
+
     color: var(--text-secondary);
+
     font-size: 12px;
     font-weight: 500;
 }
+
+/* =========================
+   NUMBER OPTIONS
+========================= */
 
 .number-options {
     display: flex;
@@ -365,30 +496,47 @@ body.light .topbar {
 .number-option {
     width: 48px;
     height: 42px;
+
     border: 1px solid var(--border);
+
     border-radius: 11px;
+
     color: var(--text-secondary);
     background: var(--surface-soft);
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .number-option:hover {
     color: var(--text);
+
     border-color: rgba(216, 181, 106, 0.45);
+
     transform: translateY(-2px);
 }
 
 .number-option.active {
     color: #171119;
+
     background: var(--gold);
+
     border-color: var(--gold);
-    box-shadow: 0 5px 20px rgba(216, 181, 106, 0.12);
+
+    box-shadow:
+        0 5px 20px rgba(216, 181, 106, 0.12);
 }
+
+/* =========================
+   SPREAD OPTIONS
+========================= */
 
 .spread-options {
     display: grid;
+
     grid-template-columns: repeat(4, 1fr);
+
     gap: 10px;
 }
 
@@ -396,23 +544,32 @@ body.light .topbar {
     display: flex;
     align-items: center;
     gap: 12px;
+
     padding: 15px;
+
     text-align: left;
+
     border-radius: 14px;
+
     border: 1px solid var(--border);
+
     color: var(--text);
     background: var(--surface-soft);
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .spread-option:hover {
     transform: translateY(-2px);
+
     border-color: rgba(216, 181, 106, 0.3);
 }
 
 .spread-option.active {
     border-color: rgba(216, 181, 106, 0.55);
+
     background:
         linear-gradient(
             135deg,
@@ -424,11 +581,16 @@ body.light .topbar {
 .spread-icon {
     width: 36px;
     height: 36px;
+
     flex-shrink: 0;
+
     display: grid;
     place-items: center;
+
     border-radius: 10px;
+
     color: var(--gold);
+
     background: var(--violet-soft);
 }
 
@@ -439,20 +601,31 @@ body.light .topbar {
 
 .spread-option strong {
     display: block;
+
     font-size: 12px;
+
     font-weight: 500;
 }
 
 .spread-option span {
     display: block;
+
     margin-top: 3px;
+
     color: var(--text-muted);
+
     font-size: 9px;
 }
 
+/* =========================
+   SELECTION MODE
+========================= */
+
 .selection-mode {
     display: grid;
+
     grid-template-columns: 1fr 1fr;
+
     gap: 12px;
 }
 
@@ -460,33 +633,48 @@ body.light .topbar {
     display: flex;
     align-items: center;
     gap: 15px;
+
     padding: 18px;
+
     text-align: left;
+
     border-radius: 16px;
+
     border: 1px solid var(--border);
+
     background: var(--surface-soft);
+
     color: var(--text);
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .selection-mode-option > svg {
     width: 22px;
     height: 22px;
+
     flex-shrink: 0;
+
     color: var(--gold);
 }
 
 .selection-mode-option strong {
     display: block;
+
     font-size: 13px;
+
     font-weight: 500;
 }
 
 .selection-mode-option span {
     display: block;
+
     margin-top: 4px;
+
     color: var(--text-muted);
+
     font-size: 10px;
 }
 
@@ -496,31 +684,52 @@ body.light .topbar {
 
 .selection-mode-option.active {
     border-color: rgba(157, 117, 213, 0.5);
+
     background: var(--violet-soft);
 }
 
+/* =========================
+   READING AREA
+========================= */
+
 .reading-area {
     min-height: 500px;
+
     padding: 35px;
 }
 
 .reading-status {
     padding: 7px 12px;
+
     border-radius: 30px;
+
     color: var(--gold);
+
     background: rgba(216, 181, 106, 0.08);
+
     border: 1px solid rgba(216, 181, 106, 0.15);
+
     font-size: 9px;
+
     letter-spacing: 1px;
 }
 
+/* =========================
+   CARDS AREA
+========================= */
+
 .cards-area {
     min-height: 310px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     gap: 25px;
+
     flex-wrap: wrap;
+
     padding: 35px 15px;
 }
 
@@ -534,15 +743,21 @@ body.light .topbar {
 
 .cards-area.spread-triangle {
     display: grid;
+
     grid-template-columns: repeat(3, 150px);
+
     justify-content: center;
 }
 
 .cards-area.spread-cross {
     display: grid;
+
     grid-template-columns: repeat(3, 150px);
+
     grid-template-rows: repeat(3, 260px);
+
     justify-content: center;
+
     align-items: center;
 }
 
@@ -571,23 +786,36 @@ body.light .topbar {
     grid-row: 3;
 }
 
+/* =========================
+   EMPTY CARD
+========================= */
+
 .empty-card {
     width: 150px;
     height: 260px;
+
     position: relative;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     flex-shrink: 0;
+
     border-radius: 15px;
+
     border: 1px dashed rgba(216, 181, 106, 0.38);
+
     background:
         linear-gradient(
             145deg,
             rgba(216, 181, 106, 0.035),
             rgba(157, 117, 213, 0.07)
         );
+
     cursor: pointer;
+
     transition:
         transform var(--transition),
         border var(--transition),
@@ -596,16 +824,23 @@ body.light .topbar {
 
 .empty-card::before {
     content: "";
+
     position: absolute;
+
     inset: 8px;
+
     border-radius: 10px;
+
     border: 1px solid rgba(216, 181, 106, 0.08);
+
     pointer-events: none;
 }
 
 .empty-card:hover {
     transform: translateY(-8px);
+
     border-color: var(--gold);
+
     box-shadow:
         0 18px 40px rgba(0, 0, 0, 0.25),
         0 0 30px rgba(216, 181, 106, 0.08);
@@ -614,17 +849,24 @@ body.light .topbar {
 .empty-card-plus {
     width: 50px;
     height: 50px;
+
     display: grid;
     place-items: center;
+
     border-radius: 50%;
+
     color: var(--gold);
+
     background: rgba(216, 181, 106, 0.08);
+
     border: 1px solid rgba(216, 181, 106, 0.2);
+
     transition: var(--transition);
 }
 
 .empty-card:hover .empty-card-plus {
     transform: scale(1.12);
+
     background: rgba(216, 181, 106, 0.15);
 }
 
@@ -633,24 +875,34 @@ body.light .topbar {
     height: 21px;
 }
 
+/* =========================
+   TAROT CARD
+========================= */
+
 .tarot-slot {
     width: 150px;
     height: 260px;
+
     flex-shrink: 0;
 }
 
 .tarot-card {
     width: 150px;
     height: 260px;
+
     perspective: 1200px;
+
     cursor: pointer;
 }
 
 .tarot-card-inner {
     width: 100%;
     height: 100%;
+
     position: relative;
+
     transform-style: preserve-3d;
+
     transition:
         transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -670,11 +922,16 @@ body.light .topbar {
 .tarot-card-front,
 .tarot-card-back {
     position: absolute;
+
     inset: 0;
+
     width: 100%;
     height: 100%;
+
     border-radius: 15px;
+
     overflow: hidden;
+
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
@@ -691,104 +948,151 @@ body.light .topbar {
             #251735,
             #100c17
         );
+
     border: 1px solid rgba(216, 181, 106, 0.35);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.35);
 }
 
 .tarot-card-front img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     display: block;
 }
 
 .tarot-card-back {
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     flex-direction: column;
+
     padding: 18px;
+
     text-align: center;
+
     background:
         linear-gradient(
             145deg,
             #21152e,
             #0e0a13
         );
+
     border: 1px solid rgba(216, 181, 106, 0.35);
+
     transform: rotateY(180deg);
 }
 
 .selected-card-name {
     color: var(--gold-light);
+
     font-family: "Cinzel", serif;
+
     font-size: 16px;
+
     line-height: 1.4;
 }
 
 .selected-card-position {
     margin-top: 10px;
+
     color: var(--text-muted);
+
     font-size: 9px;
+
     letter-spacing: 1px;
 }
 
 .selected-card-action {
     margin-top: 25px;
+
     padding: 7px 11px;
+
     border-radius: 8px;
+
     color: var(--text-secondary);
+
     background: var(--surface-soft);
+
     border: 1px solid var(--border);
+
     font-size: 9px;
 }
 
 .tarot-image {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     display: block;
 }
 
+/* =========================
+   READING ACTIONS
+========================= */
+
 .reading-actions {
     display: flex;
+
     justify-content: center;
+
     gap: 10px;
+
     margin-top: 20px;
 }
 
 .primary-button,
 .secondary-button {
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     gap: 8px;
+
     padding: 12px 20px;
+
     border-radius: 12px;
+
     font-size: 12px;
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .primary-button {
     color: #171119;
+
     background: var(--gold);
+
     border: 1px solid var(--gold);
 }
 
 .primary-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(216, 181, 106, 0.18);
+
+    box-shadow:
+        0 10px 30px rgba(216, 181, 106, 0.18);
 }
 
 .secondary-button {
     color: var(--text-secondary);
+
     background: var(--surface-soft);
+
     border: 1px solid var(--border);
 }
 
 .secondary-button:hover {
     color: var(--text);
+
     border-color: var(--gold);
 }
 
@@ -798,52 +1102,59 @@ body.light .topbar {
     height: 15px;
 }
 
+/* =========================
+   LEARNING SECTION
+========================= */
+
 .learning-section {
     max-width: 1150px;
+
     margin: 0 auto;
-    padding: 80px 30px 100px;
+
+    padding: 40px 30px 100px;
 }
+
+/*
+   El encabezado antiguo de "INTERACTIVE TAROT"
+   ya no se utiliza.
+*/
 
 .learning-header {
-    max-width: 650px;
-    margin: 0 auto 45px;
-    text-align: center;
+    display: none;
 }
 
-.learning-header h2 {
-    margin: 18px 0;
-    font-family: "Cinzel", serif;
-    font-size: clamp(35px, 5vw, 58px);
-    font-weight: 500;
-}
-
-.learning-header h2 span {
-    color: var(--gold);
-}
-
-.learning-header p {
-    color: var(--text-secondary);
-    font-size: 14px;
-    line-height: 1.7;
-}
+/* =========================
+   CATEGORY FILTERS
+========================= */
 
 .category-filters {
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     flex-wrap: wrap;
+
     gap: 8px;
+
     margin-bottom: 35px;
 }
 
 .category-filter {
     padding: 9px 15px;
+
     border-radius: 30px;
+
     border: 1px solid var(--border);
+
     color: var(--text-secondary);
+
     background: var(--surface-soft);
+
     font-size: 11px;
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -853,45 +1164,72 @@ body.light .topbar {
 
 .category-filter.active {
     color: var(--gold);
+
     border-color: rgba(216, 181, 106, 0.35);
+
     background: rgba(216, 181, 106, 0.06);
 }
 
+/* =========================
+   LEARNING GRID
+========================= */
+
 .learning-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(150px, 1fr)
+        );
+
     gap: 20px;
 }
 
 .learning-card {
     overflow: hidden;
+
     border: 1px solid var(--border);
+
     border-radius: 18px;
+
     background: var(--surface);
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .learning-card:hover {
     transform: translateY(-7px);
+
     border-color: rgba(216, 181, 106, 0.35);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.2);
 }
 
 .learning-card-image {
     height: 230px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     overflow: hidden;
+
     background: #15101d;
 }
 
 .learning-card-image img {
     width: 100%;
     height: 100%;
+
     display: block;
+
     object-fit: cover;
+
     transition: transform 0.5s ease;
 }
 
@@ -905,48 +1243,77 @@ body.light .topbar {
 
 .learning-card-info span {
     color: var(--text-muted);
+
     font-size: 9px;
+
     letter-spacing: 2px;
 }
 
 .learning-card-info h4 {
     margin-top: 5px;
+
     font-family: "Cinzel", serif;
+
     font-size: 13px;
+
     font-weight: 500;
 }
 
+/* =========================
+   MODAL
+========================= */
+
 .modal-overlay {
     position: fixed;
+
     inset: 0;
+
     z-index: 500;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     padding: 25px;
+
     background: rgba(5, 3, 9, 0.8);
+
     backdrop-filter: blur(13px);
     -webkit-backdrop-filter: blur(13px);
+
     opacity: 0;
+
     visibility: hidden;
+
     transition: var(--transition);
 }
 
 .modal-overlay.active {
     opacity: 1;
+
     visibility: visible;
 }
 
 .card-modal {
     width: min(950px, 100%);
+
     max-height: 90vh;
+
     overflow: auto;
+
     padding: 30px;
+
     border: 1px solid var(--border);
+
     border-radius: 25px;
+
     background: var(--surface-solid);
+
     box-shadow: var(--shadow);
+
     transform: translateY(20px) scale(0.98);
+
     transition: var(--transition);
 }
 
@@ -955,35 +1322,53 @@ body.light .topbar {
     transform: translateY(0) scale(1);
 }
 
+/* =========================
+   MODAL HEADER
+========================= */
+
 .modal-header {
     display: flex;
+
     align-items: flex-start;
     justify-content: space-between;
+
     margin-bottom: 20px;
 }
 
 .modal-header h3 {
     margin-top: 5px;
+
     font-family: "Cinzel", serif;
+
     font-size: 24px;
+
     font-weight: 500;
 }
 
 .close-modal {
     width: 38px;
     height: 38px;
+
     display: grid;
+
     place-items: center;
+
     border-radius: 10px;
+
     border: 1px solid var(--border);
+
     color: var(--text-secondary);
+
     background: var(--surface-soft);
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .close-modal:hover {
     color: var(--text);
+
     border-color: var(--gold);
 }
 
@@ -992,30 +1377,48 @@ body.light .topbar {
     height: 17px;
 }
 
+/* =========================
+   MODAL SEARCH
+========================= */
+
 .modal-search {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     padding: 12px 15px;
+
     margin-bottom: 25px;
+
     border: 1px solid var(--border);
+
     border-radius: 12px;
+
     background: var(--surface-soft);
 }
 
 .modal-search svg {
     width: 17px;
     height: 17px;
+
     color: var(--text-muted);
 }
 
 .modal-search input {
     width: 100%;
+
     border: none;
+
     outline: none;
+
     background: transparent;
+
     color: var(--text);
+
     font-family: inherit;
+
     font-size: 12px;
 }
 
@@ -1023,107 +1426,184 @@ body.light .topbar {
     color: var(--text-muted);
 }
 
+/* =========================
+   MODAL CARDS
+========================= */
+
 .modal-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(105px, 1fr)
+        );
+
     gap: 14px;
 }
 
 .selector-card {
     min-height: 160px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     flex-direction: column;
+
     gap: 8px;
+
     padding: 12px;
+
     border: 1px solid var(--border);
+
     border-radius: 14px;
+
     background: var(--surface-soft);
+
     color: var(--text);
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .selector-card:hover {
     transform: translateY(-5px);
+
     border-color: rgba(216, 181, 106, 0.45);
+
     background: rgba(216, 181, 106, 0.06);
 }
 
 .selector-card-image {
     width: 65px;
     height: 90px;
+
     overflow: hidden;
+
     border-radius: 8px;
+
     background: #15101d;
+
     border: 1px solid rgba(216, 181, 106, 0.3);
 }
 
 .selector-card-image img {
     width: 100%;
     height: 100%;
+
     display: block;
+
     object-fit: cover;
 }
 
 .selector-card strong {
     max-width: 100px;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
+
     white-space: nowrap;
+
     font-size: 10px;
+
     font-weight: 500;
 }
 
 .selector-card small {
     color: var(--text-muted);
+
     font-size: 8px;
 }
 
+.empty-search {
+    grid-column: 1 / -1;
+
+    padding: 40px;
+
+    text-align: center;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+}
+
+/* =========================
+   DETAIL MODAL
+========================= */
+
 .detail-modal {
     width: min(850px, 100%);
+
     max-height: 90vh;
+
     overflow: auto;
+
     display: grid;
+
     grid-template-columns: 300px 1fr;
+
     gap: 45px;
+
     position: relative;
+
     padding: 40px;
+
     border: 1px solid var(--border);
+
     border-radius: 25px;
+
     background: var(--surface-solid);
+
     box-shadow: var(--shadow);
+
     transform: translateY(20px) scale(0.98);
+
     transition: var(--transition);
 }
 
 .detail-close {
     position: absolute;
+
     top: 20px;
     right: 20px;
+
     z-index: 10;
 }
 
 .detail-card-container {
     min-height: 430px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
 }
 
+/* =========================
+   DETAIL TAROT CARD
+========================= */
+
 .detail-tarot-card {
     width: 230px;
     height: 390px;
+
     perspective: 1200px;
+
     cursor: pointer;
 }
 
 .detail-tarot-inner {
     width: 100%;
     height: 100%;
+
     position: relative;
+
     transform-style: preserve-3d;
+
     transition:
         transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -1135,59 +1615,87 @@ body.light .topbar {
 .detail-tarot-front,
 .detail-tarot-back {
     position: absolute;
+
     inset: 0;
+
     width: 100%;
     height: 100%;
+
     border-radius: 17px;
+
     overflow: hidden;
+
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
 .detail-tarot-front {
     position: relative;
+
     background: #15101d;
+
     border: 1px solid rgba(216, 181, 106, 0.4);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+
+    box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.4);
 }
 
 .detail-tarot-front img {
     width: 100%;
     height: 100%;
+
     display: block;
+
     object-fit: cover;
+
     border-radius: 17px;
 }
 
 .detail-tarot-back {
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     flex-direction: column;
+
     padding: 25px;
+
     text-align: center;
+
     background:
         linear-gradient(
             145deg,
             #21152e,
             #0e0a13
         );
+
     border: 1px solid rgba(216, 181, 106, 0.35);
+
     transform: rotateY(180deg);
 }
 
 .detail-card-number {
     margin-bottom: 15px;
+
     color: var(--gold);
+
     font-size: 12px;
+
     letter-spacing: 3px;
 }
 
 .detail-tarot-back h4 {
     font-family: "Cinzel", serif;
+
     font-size: 25px;
+
     font-weight: 500;
 }
+
+/* =========================
+   DETAIL INFORMATION
+========================= */
 
 .detail-information {
     align-self: center;
@@ -1195,31 +1703,49 @@ body.light .topbar {
 
 .card-category {
     color: var(--gold);
+
     font-size: 10px;
+
     letter-spacing: 3px;
 }
 
 .detail-information h3 {
     margin: 10px 0 25px;
+
     font-family: "Cinzel", serif;
+
     font-size: 32px;
+
     font-weight: 500;
 }
 
+/* =========================
+   MEANING TABS
+========================= */
+
 .meaning-tabs {
     display: flex;
+
     gap: 8px;
+
     margin-bottom: 20px;
 }
 
 .meaning-tab {
     padding: 9px 15px;
+
     border-radius: 10px;
+
     border: 1px solid var(--border);
+
     color: var(--text-secondary);
+
     background: var(--surface-soft);
+
     font-size: 11px;
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -1229,60 +1755,83 @@ body.light .topbar {
 
 .meaning-tab.active {
     color: var(--gold);
+
     border-color: rgba(216, 181, 106, 0.4);
+
     background: rgba(216, 181, 106, 0.07);
 }
 
+/* =========================
+   MEANING CONTENT
+========================= */
+
 .meaning-content {
     color: var(--text-secondary);
+
     font-size: 13px;
+
     line-height: 1.8;
 }
 
 .meaning-content h4 {
     margin-bottom: 8px;
+
     color: var(--text);
+
     font-family: "Cinzel", serif;
+
     font-size: 14px;
+
     font-weight: 500;
 }
 
 .meaning-keywords {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 7px;
+
     margin-top: 12px;
 }
 
 .meaning-keyword {
     padding: 6px 9px;
+
     border-radius: 20px;
+
     color: var(--gold);
+
     background: var(--violet-soft);
+
     border: 1px solid var(--border);
+
     font-size: 10px;
 }
 
-.empty-search {
-    grid-column: 1 / -1;
-    padding: 40px;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 13px;
-}
+/* =========================
+   UTILITY
+========================= */
 
 .hidden {
     display: none !important;
 }
 
+/* =========================
+   TABLET
+========================= */
+
 @media (max-width: 900px) {
+
     .spread-options {
         grid-template-columns: repeat(2, 1fr);
     }
 
     .detail-modal {
         grid-template-columns: 1fr;
+
         max-width: 550px;
+
         gap: 20px;
     }
 
@@ -1291,7 +1840,12 @@ body.light .topbar {
     }
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 700px) {
+
     .topbar {
         padding: 0 20px;
     }
@@ -1313,7 +1867,12 @@ body.light .topbar {
     }
 }
 
+/* =========================
+   SMALL MOBILE
+========================= */
+
 @media (max-width: 600px) {
+
     .practice-section,
     .learning-section {
         padding-left: 15px;
@@ -1350,16 +1909,23 @@ body.light .topbar {
 
     .cards-area.spread-cross {
         display: flex;
+
         flex-wrap: wrap;
     }
 
     .cards-area.spread-triangle {
         display: flex;
+
         flex-wrap: wrap;
     }
 }
 
+/* =========================
+   VERY SMALL MOBILE
+========================= */
+
 @media (max-width: 420px) {
+
     .hero h2 {
         font-size: 40px;
     }
