@@ -558,7 +558,7 @@ const imageMap = {
     "Strength": "STRENGTH.jpg",
     "Fortitude": "STRENGTH.jpg",
     "The Hermit": "THE HERMIT.jpg",
-    "Wheel of Fortune": "WHEEL OF FORTUNE.jpg",
+    "Wheel of Fortune": "ar10.jpg",
     "Justice": "JUSTICE.jpg",
     "The Hanged Man": "THE HANGED MAN.jpg",
     "Death": "DEATH.jpg",
@@ -568,7 +568,7 @@ const imageMap = {
     "The Star": "THE STAR.jpg",
     "The Moon": "THE MOON.jpg",
     "The Sun": "THE SUN.jpg",
-    "Judgement": "JUDGEMENT.jpg",
+    "Judgement": "ar20.jpg",
     "The World": "THE WORLD.jpg",
 
     // BASTOS
@@ -584,9 +584,9 @@ const imageMap = {
     "Nine of Wands": "wa09.jpg",
     "Ten of Wands": "wa10.jpg",
     "Page of Wands": "wapa.jpg",
-    "Knight of Wands": "waki.jpg",
+    "Knight of Wands": "wakn.jpg",
     "Queen of Wands": "waqu.jpg",
-    "King of Wands": "waking.jpg",
+    "King of Wands": "waki.jpg",
 
     // COPAS
 
@@ -601,13 +601,13 @@ const imageMap = {
     "Nine of Cups": "cu09.jpg",
     "Ten of Cups": "cu10.jpg",
     "Page of Cups": "cupa.jpg",
-    "Knight of Cups": "cuki.jpg",
+    "Knight of Cups": "cukn.jpg",
     "Queen of Cups": "cuqu.jpg",
-    "King of Cups": "coking.jpg",
+    "King of Cups": "cuki.jpg",
 
     // ESPADAS
 
-    "Ace of Swords": "swac.jpg",
+    "Ace of Swords": "ace of swords.jpeg",
     "Two of Swords": "sw02.jpg",
     "Three of Swords": "sw03.jpg",
     "Four of Swords": "sw04.jpg",
@@ -617,10 +617,10 @@ const imageMap = {
     "Eight of Swords": "sw08.jpg",
     "Nine of Swords": "sw09.jpg",
     "Ten of Swords": "sw10.jpg",
-    "Page of Swords": "swpa.jpg",
-    "Knight of Swords": "swki.jpg",
-    "Queen of Swords": "swqu.jpg",
-    "King of Swords": "swking.jpg",
+    "Page of Swords": "page of swords.jpeg",
+    "Knight of Swords": "knight of swords.jpeg",
+    "Queen of Swords": "queen of swords.jpeg",
+    "King of Swords": "king-of-swords-6704026_1280.jpg",
 
     // OROS
 
@@ -634,11 +634,11 @@ const imageMap = {
     "Eight of Pentacles": "pe08.jpg",
     "Nine of Pentacles": "pe09.jpg",
     "Ten of Pentacles": "pe10.jpg",
-    "Page of Pentacles": "pepa.jpg",
-    "Knight of Pentacles": "peki.jpg",
-    "Queen of Pentacles": "pequ.jpg",
-    "King of Pentacles": "peking.jpg"
-};
+    "Page of Pentacles": "pape.jpeg",
+    "Knight of Pentacles": "knipen.jpeg",
+    "Queen of Pentacles": "queenpenta.jpeg",
+    "King of Pentacles": "kingpenta.jpeg"
+};   
 
 
 // ========================================
