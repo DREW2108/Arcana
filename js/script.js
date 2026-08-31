@@ -555,7 +555,6 @@ const imageMap = {
     "The Hierophant": "THE HIEROPHANT.jpg",
     "The Lovers": "THE LOVERS.jpg",
     "The Chariot": "THE CHARIOT.jpg",
-    "Strength": "STRENGTH.jpg",
     "Fortitude": "STRENGTH.jpg",
     "The Hermit": "THE HERMIT.jpg",
     "Wheel of Fortune": "ar10.jpg",
