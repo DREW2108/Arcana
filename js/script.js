@@ -555,7 +555,9 @@ const imageMap = {
     "The Hierophant": "THE HIEROPHANT.jpg",
     "The Lovers": "THE LOVERS.jpg",
     "The Chariot": "THE CHARIOT.jpg",
+
     "Fortitude": "STRENGTH.jpg",
+
     "The Hermit": "THE HERMIT.jpg",
     "Wheel of Fortune": "ar10.jpg",
     "Justice": "JUSTICE.jpg",
@@ -569,6 +571,7 @@ const imageMap = {
     "The Sun": "THE SUN.jpg",
     "Judgement": "ar20.jpg",
     "The World": "THE WORLD.jpg",
+
 
     // BASTOS
 
@@ -587,6 +590,7 @@ const imageMap = {
     "Queen of Wands": "waqu.jpg",
     "King of Wands": "waki.jpg",
 
+
     // COPAS
 
     "Ace of Cups": "cuac.jpg",
@@ -603,6 +607,7 @@ const imageMap = {
     "Knight of Cups": "cukn.jpg",
     "Queen of Cups": "cuqu.jpg",
     "King of Cups": "cuki.jpg",
+
 
     // ESPADAS
 
@@ -621,6 +626,7 @@ const imageMap = {
     "Queen of Swords": "queen of swords.jpeg",
     "King of Swords": "king-of-swords-6704026_1280.jpg",
 
+
     // OROS
 
     "Ace of Pentacles": "peac.jpg",
@@ -637,7 +643,7 @@ const imageMap = {
     "Knight of Pentacles": "knipen.jpeg",
     "Queen of Pentacles": "queenpenta.jpeg",
     "King of Pentacles": "kingpenta.jpeg"
-};   
+};
 
 
 // ========================================
@@ -645,6 +651,8 @@ const imageMap = {
 // ========================================
 
 const spanishNames = {
+
+    // ARCANOS MAYORES
 
     "The Fool": "El Loco",
     "The Magician": "El Mago",
@@ -670,6 +678,9 @@ const spanishNames = {
     "Judgement": "El Juicio",
     "The World": "El Mundo",
 
+
+    // BASTOS
+
     "Ace of Wands": "As de Bastos",
     "Two of Wands": "Dos de Bastos",
     "Three of Wands": "Tres de Bastos",
@@ -684,6 +695,9 @@ const spanishNames = {
     "Knight of Wands": "Caballero de Bastos",
     "Queen of Wands": "Reina de Bastos",
     "King of Wands": "Rey de Bastos",
+
+
+    // COPAS
 
     "Ace of Cups": "As de Copas",
     "Two of Cups": "Dos de Copas",
@@ -700,6 +714,9 @@ const spanishNames = {
     "Queen of Cups": "Reina de Copas",
     "King of Cups": "Rey de Copas",
 
+
+    // ESPADAS
+
     "Ace of Swords": "As de Espadas",
     "Two of Swords": "Dos de Espadas",
     "Three of Swords": "Tres de Espadas",
@@ -714,6 +731,9 @@ const spanishNames = {
     "Knight of Swords": "Caballero de Espadas",
     "Queen of Swords": "Reina de Espadas",
     "King of Swords": "Rey de Espadas",
+
+
+    // OROS
 
     "Ace of Pentacles": "As de Oros",
     "Two of Pentacles": "Dos de Oros",
@@ -893,18 +913,63 @@ async function loadTarotCards() {
 
         const apiCards = data.cards || data;
 
-        tarotCards = apiCards.map(normalizeCard);
+
+        // ========================================
+        // ELIMINAR DUPLICADOS DE LA API
+        // ========================================
+
+        const filteredCards = apiCards.filter(function(card) {
+
+            const name = (card.name || "")
+                .trim()
+                .toLowerCase();
+
+
+            // Eliminar:
+            // The Last Judgment
+
+            if (name === "the last judgment") {
+                return false;
+            }
+
+
+            // Eliminar:
+            // Wheel Of Fortune
+
+            if (name === "wheel of fortune") {
+                return false;
+            }
+
+
+            return true;
+        });
+
+
+        tarotCards = filteredCards.map(normalizeCard);
+
+
+        // ========================================
+        // AGREGAR CARTAS FALTANTES
+        // ========================================
 
         addMissingCards();
 
-        console.log("Tarot cargado:", tarotCards.length);
+
+        console.log(
+            "Tarot cargado:",
+            tarotCards.length
+        );
 
     } catch (error) {
 
-        console.error("Error con la API:", error);
+        console.error(
+            "Error con la API:",
+            error
+        );
 
         createLocalDeck();
     }
+
 
     renderLearningCards(currentFilter);
     renderModalCards();
@@ -921,22 +986,28 @@ function addMissingCards() {
     Object.keys(tarotMeanings).forEach(function(name) {
 
         const exists = tarotCards.some(function(card) {
+
             return card.name === name;
+
         });
+
 
         if (!exists && imageMap[name]) {
 
             const data = tarotMeanings[name];
 
             tarotCards.push({
+
                 name: name,
                 category: data.category,
                 number: data.number || "",
                 meaning: data.upright,
                 meaning_rev: data.reversed
+
             });
         }
     });
+
 
     tarotCards = tarotCards.map(normalizeCard);
 }
@@ -953,15 +1024,22 @@ function createLocalDeck() {
         const data = tarotMeanings[name];
 
         return {
+
             name: name,
             category: data.category,
             number: data.number || "",
             meaning: data.upright,
             meaning_rev: data.reversed
+
         };
+
     });
 
-    console.log("Usando mazo local:", tarotCards.length);
+
+    console.log(
+        "Usando mazo local:",
+        tarotCards.length
+    );
 }
 
 
@@ -971,7 +1049,8 @@ function createLocalDeck() {
 
 function renderLearningCards(filter) {
 
-    const container = document.getElementById("learningGrid");
+    const container =
+        document.getElementById("learningGrid");
 
     if (!container) {
         return;
@@ -983,6 +1062,7 @@ function renderLearningCards(filter) {
 
     let cardsToShow = tarotCards;
 
+
     if (currentFilter !== "all") {
 
         cardsToShow = tarotCards.filter(function(card) {
@@ -990,20 +1070,35 @@ function renderLearningCards(filter) {
             return getCardCategory(card) === currentFilter;
 
         });
+
     }
+
 
     cardsToShow.forEach(function(card) {
 
-        const article = document.createElement("article");
+        const article =
+            document.createElement("article");
 
-        article.className = "learning-card";
+        article.className =
+            "learning-card";
 
-        const image = getCardImage(card);
-        const name = getCardName(card);
-        const spanishName = getSpanishCardName(card);
-        const category = getCardCategory(card);
 
-        let categoryName = "ARCANO MAYOR";
+        const image =
+            getCardImage(card);
+
+        const name =
+            getCardName(card);
+
+        const spanishName =
+            getSpanishCardName(card);
+
+        const category =
+            getCardCategory(card);
+
+
+        let categoryName =
+            "ARCANO MAYOR";
+
 
         if (category === "wands") {
             categoryName = "BASTOS";
@@ -1021,30 +1116,56 @@ function renderLearningCards(filter) {
             categoryName = "OROS";
         }
 
+
         article.innerHTML = `
+
             <div class="learning-card-image">
+
                 ${
                     image
-                        ? `<img src="${image}" alt="${spanishName}">`
-                        : `<div class="no-image">TAROT</div>`
+
+                        ? `
+                            <img
+                                src="${image}"
+                                alt="${spanishName}"
+                            >
+                        `
+
+                        : `
+                            <div class="no-image">
+                                TAROT
+                            </div>
+                        `
                 }
+
             </div>
+
 
             <div class="learning-card-info">
+
                 <span>${categoryName}</span>
+
                 <h4>${spanishName}</h4>
+
             </div>
+
         `;
 
-        article.addEventListener("click", function() {
 
-            selectedCard = card;
+        article.addEventListener(
+            "click",
+            function() {
 
-            openCardDetail(card);
+                selectedCard = card;
 
-        });
+                openCardDetail(card);
+
+            }
+        );
+
 
         container.appendChild(article);
+
     });
 }
 
@@ -1056,26 +1177,40 @@ function renderLearningCards(filter) {
 function setupCategoryFilters() {
 
     const filters =
-        document.querySelectorAll(".category-filter");
+        document.querySelectorAll(
+            ".category-filter"
+        );
+
 
     filters.forEach(function(filter) {
 
-        filter.addEventListener("click", function() {
+        filter.addEventListener(
+            "click",
+            function() {
 
-            filters.forEach(function(item) {
-                item.classList.remove("active");
-            });
+                filters.forEach(
+                    function(item) {
+                        item.classList.remove("active");
+                    }
+                );
 
-            filter.classList.add("active");
 
-            const category =
-                filter.dataset.category || "all";
+                filter.classList.add("active");
 
-            currentFilter = category;
 
-            renderLearningCards(category);
+                const category =
+                    filter.dataset.category || "all";
 
-        });
+
+                currentFilter =
+                    category;
+
+
+                renderLearningCards(category);
+
+            }
+        );
+
     });
 }
 
@@ -1089,26 +1224,42 @@ function renderModalCards() {
     const container =
         document.getElementById("modalCards");
 
+
     if (!container) {
         return;
     }
 
+
     container.innerHTML = "";
+
 
     tarotCards.forEach(function(card) {
 
         const button =
             document.createElement("button");
 
-        button.className = "selector-card";
 
-        const image = getCardImage(card);
-        const name = getCardName(card);
-        const spanishName = getSpanishCardName(card);
+        button.className =
+            "selector-card";
 
-        let categoryName = "Arcano Mayor";
 
-        const category = getCardCategory(card);
+        const image =
+            getCardImage(card);
+
+        const name =
+            getCardName(card);
+
+        const spanishName =
+            getSpanishCardName(card);
+
+
+        let categoryName =
+            "Arcano Mayor";
+
+
+        const category =
+            getCardCategory(card);
+
 
         if (category === "wands") {
             categoryName = "Bastos";
@@ -1126,27 +1277,55 @@ function renderModalCards() {
             categoryName = "Oros";
         }
 
+
         button.innerHTML = `
+
             <div class="selector-card-image">
+
                 ${
                     image
-                        ? `<img src="${image}" alt="${spanishName}">`
-                        : `<div class="no-image">TAROT</div>`
+
+                        ? `
+                            <img
+                                src="${image}"
+                                alt="${spanishName}"
+                            >
+                        `
+
+                        : `
+                            <div class="no-image">
+                                TAROT
+                            </div>
+                        `
                 }
+
             </div>
 
-            <strong>${spanishName}</strong>
 
-            <small>${categoryName}</small>
+            <strong>
+                ${spanishName}
+            </strong>
+
+
+            <small>
+                ${categoryName}
+            </small>
+
         `;
 
-        button.addEventListener("click", function() {
 
-            selectCard(card);
+        button.addEventListener(
+            "click",
+            function() {
 
-        });
+                selectCard(card);
+
+            }
+        );
+
 
         container.appendChild(button);
+
     });
 }
 
@@ -1159,12 +1338,15 @@ function selectCard(card) {
 
     selectedCard = card;
 
+
     const modal =
         document.getElementById("cardModal");
+
 
     if (modal) {
         modal.classList.remove("active");
     }
+
 
     openCardDetail(card);
 }
@@ -1178,57 +1360,80 @@ function openCardDetail(card) {
 
     selectedCard = card;
 
+
     const modal =
         document.getElementById("detailModal");
 
     const container =
-        document.getElementById("detailCardContainer");
+        document.getElementById(
+            "detailCardContainer"
+        );
 
     const title =
-        document.getElementById("detailTitle");
+        document.getElementById(
+            "detailTitle"
+        );
 
     const category =
-        document.getElementById("detailCategory");
+        document.getElementById(
+            "detailCategory"
+        );
+
 
     if (!modal || !container) {
         return;
     }
 
-    const image = getCardImage(card);
-    const spanishName = getSpanishCardName(card);
-    const tarotName = getCardName(card);
+
+    const image =
+        getCardImage(card);
+
+    const spanishName =
+        getSpanishCardName(card);
+
 
     if (title) {
-        title.textContent = spanishName;
+        title.textContent =
+            spanishName;
     }
+
 
     if (category) {
 
         const cardCategory =
             getCardCategory(card);
 
+
         if (cardCategory === "major") {
-            category.textContent = "ARCANO MAYOR";
+            category.textContent =
+                "ARCANO MAYOR";
         }
 
         if (cardCategory === "wands") {
-            category.textContent = "BASTOS";
+            category.textContent =
+                "BASTOS";
         }
 
         if (cardCategory === "cups") {
-            category.textContent = "COPAS";
+            category.textContent =
+                "COPAS";
         }
 
         if (cardCategory === "swords") {
-            category.textContent = "ESPADAS";
+            category.textContent =
+                "ESPADAS";
         }
 
         if (cardCategory === "pentacles") {
-            category.textContent = "OROS";
+            category.textContent =
+                "OROS";
         }
+
     }
 
+
     container.innerHTML = `
+
         <div class="detail-tarot-card">
 
             <div class="detail-tarot-inner">
@@ -1237,17 +1442,30 @@ function openCardDetail(card) {
 
                     ${
                         image
-                            ? `<img src="${image}" alt="${spanishName}">`
-                            : `<div class="no-image">TAROT</div>`
+
+                            ? `
+                                <img
+                                    src="${image}"
+                                    alt="${spanishName}"
+                                >
+                            `
+
+                            : `
+                                <div class="no-image">
+                                    TAROT
+                                </div>
+                            `
                     }
 
                 </div>
+
 
                 <div class="detail-tarot-back">
 
                     <span class="detail-card-number">
                         ${card.number || ""}
                     </span>
+
 
                     <h4>
                         ${spanishName}
@@ -1258,19 +1476,31 @@ function openCardDetail(card) {
             </div>
 
         </div>
+
     `;
 
+
     const detailCard =
-        container.querySelector(".detail-tarot-card");
+        container.querySelector(
+            ".detail-tarot-card"
+        );
+
 
     if (detailCard) {
 
-        detailCard.addEventListener("click", function() {
+        detailCard.addEventListener(
+            "click",
+            function() {
 
-            detailCard.classList.toggle("flipped");
+                detailCard.classList.toggle(
+                    "flipped"
+                );
 
-        });
+            }
+        );
+
     }
+
 
     setupMeaningTabsForCard();
 
@@ -1289,36 +1519,54 @@ function openCardDetail(card) {
 function showMeaning(card, type) {
 
     const container =
-        document.getElementById("meaningContent");
+        document.getElementById(
+            "meaningContent"
+        );
+
 
     if (!container) {
         return;
     }
 
+
     const text =
-        getCardMeaning(card, type);
+        getCardMeaning(
+            card,
+            type
+        );
+
 
     const title =
         type === "reversed"
+
             ? "Significado invertido"
+
             : "Significado normal";
 
+
     container.innerHTML = `
-        <h4>${title}</h4>
+
+        <h4>
+            ${title}
+        </h4>
+
 
         <p>
             ${text}
         </p>
 
+
         <div class="meaning-keywords">
 
             ${
                 type === "reversed"
+
                     ? `
                         <span class="meaning-keyword">
                             Invertida
                         </span>
                     `
+
                     : `
                         <span class="meaning-keyword">
                             Normal
@@ -1327,6 +1575,7 @@ function showMeaning(card, type) {
             }
 
         </div>
+
     `;
 }
 
@@ -1338,27 +1587,43 @@ function showMeaning(card, type) {
 function setupMeaningTabsForCard() {
 
     const tabs =
-        document.querySelectorAll(".meaning-tab");
+        document.querySelectorAll(
+            ".meaning-tab"
+        );
+
 
     tabs.forEach(function(tab) {
 
-        tab.onclick = function() {
+        tab.onclick =
+            function() {
 
-            if (!selectedCard) {
-                return;
-            }
+                if (!selectedCard) {
+                    return;
+                }
 
-            tabs.forEach(function(item) {
-                item.classList.remove("active");
-            });
 
-            tab.classList.add("active");
+                tabs.forEach(
+                    function(item) {
+                        item.classList.remove("active");
+                    }
+                );
 
-            const type =
-                tab.dataset.meaning || "upright";
 
-            showMeaning(selectedCard, type);
-        };
+                tab.classList.add("active");
+
+
+                const type =
+                    tab.dataset.meaning ||
+                    "upright";
+
+
+                showMeaning(
+                    selectedCard,
+                    type
+                );
+
+            };
+
     });
 }
 
@@ -1370,38 +1635,65 @@ function setupMeaningTabsForCard() {
 function setupTheme() {
 
     const button =
-        document.getElementById("themeToggle");
+        document.getElementById(
+            "themeToggle"
+        );
 
     const icon =
-        document.getElementById("themeIcon");
+        document.getElementById(
+            "themeIcon"
+        );
+
 
     if (!button) {
         return;
     }
 
+
     const savedTheme =
-        localStorage.getItem("arcana-theme");
+        localStorage.getItem(
+            "arcana-theme"
+        );
+
 
     if (savedTheme === "light") {
-        document.body.classList.add("light");
+        document.body.classList.add(
+            "light"
+        );
     }
+
 
     updateThemeIcon();
 
-    button.addEventListener("click", function() {
 
-        document.body.classList.toggle("light");
+    button.addEventListener(
+        "click",
+        function() {
 
-        const isLight =
-            document.body.classList.contains("light");
+            document.body.classList.toggle(
+                "light"
+            );
 
-        localStorage.setItem(
-            "arcana-theme",
-            isLight ? "light" : "dark"
-        );
 
-        updateThemeIcon();
-    });
+            const isLight =
+                document.body.classList.contains(
+                    "light"
+                );
+
+
+            localStorage.setItem(
+                "arcana-theme",
+                isLight
+                    ? "light"
+                    : "dark"
+            );
+
+
+            updateThemeIcon();
+
+        }
+    );
+
 
     function updateThemeIcon() {
 
@@ -1409,13 +1701,20 @@ function setupTheme() {
             return;
         }
 
+
         const isLight =
-            document.body.classList.contains("light");
+            document.body.classList.contains(
+                "light"
+            );
+
 
         icon.setAttribute(
             "data-lucide",
-            isLight ? "sun" : "moon"
+            isLight
+                ? "sun"
+                : "moon"
         );
+
 
         refreshIcons();
     }
@@ -1429,49 +1728,83 @@ function setupTheme() {
 function setupNavigation() {
 
     const buttons =
-        document.querySelectorAll(".nav-button");
+        document.querySelectorAll(
+            ".nav-button"
+        );
+
 
     buttons.forEach(function(button) {
 
-        button.addEventListener("click", function() {
+        button.addEventListener(
+            "click",
+            function() {
 
-            buttons.forEach(function(item) {
-                item.classList.remove("active");
-            });
+                buttons.forEach(
+                    function(item) {
+                        item.classList.remove(
+                            "active"
+                        );
+                    }
+                );
 
-            button.classList.add("active");
 
-            const section =
-                button.dataset.section;
+                button.classList.add(
+                    "active"
+                );
 
-            const practice =
-                document.getElementById("practiceSection");
 
-            const learn =
-                document.getElementById("learnSection");
+                const section =
+                    button.dataset.section;
 
-            if (section === "practice") {
 
-                if (practice) {
-                    practice.classList.remove("hidden");
+                const practice =
+                    document.getElementById(
+                        "practiceSection"
+                    );
+
+
+                const learn =
+                    document.getElementById(
+                        "learnSection"
+                    );
+
+
+                if (section === "practice") {
+
+                    if (practice) {
+                        practice.classList.remove(
+                            "hidden"
+                        );
+                    }
+
+                    if (learn) {
+                        learn.classList.add(
+                            "hidden"
+                        );
+                    }
+
                 }
 
-                if (learn) {
-                    learn.classList.add("hidden");
+
+                if (section === "learn") {
+
+                    if (practice) {
+                        practice.classList.add(
+                            "hidden"
+                        );
+                    }
+
+                    if (learn) {
+                        learn.classList.remove(
+                            "hidden"
+                        );
+                    }
+
                 }
+
             }
+        );
 
-            if (section === "learn") {
-
-                if (practice) {
-                    practice.classList.add("hidden");
-                }
-
-                if (learn) {
-                    learn.classList.remove("hidden");
-                }
-            }
-        });
     });
 }
 
@@ -1483,29 +1816,50 @@ function setupNavigation() {
 function setupDetailModal() {
 
     const closeButton =
-        document.getElementById("closeDetail");
+        document.getElementById(
+            "closeDetail"
+        );
+
 
     const modal =
-        document.getElementById("detailModal");
+        document.getElementById(
+            "detailModal"
+        );
+
 
     if (closeButton && modal) {
 
-        closeButton.addEventListener("click", function() {
+        closeButton.addEventListener(
+            "click",
+            function() {
 
-            modal.classList.remove("active");
+                modal.classList.remove(
+                    "active"
+                );
 
-        });
+            }
+        );
+
     }
+
 
     if (modal) {
 
-        modal.addEventListener("click", function(event) {
+        modal.addEventListener(
+            "click",
+            function(event) {
 
-            if (event.target === modal) {
-                modal.classList.remove("active");
+                if (event.target === modal) {
+
+                    modal.classList.remove(
+                        "active"
+                    );
+
+                }
+
             }
+        );
 
-        });
     }
 }
 
@@ -1517,29 +1871,50 @@ function setupDetailModal() {
 function setupCardModal() {
 
     const modal =
-        document.getElementById("cardModal");
+        document.getElementById(
+            "cardModal"
+        );
+
 
     const closeButton =
-        document.getElementById("closeModal");
+        document.getElementById(
+            "closeModal"
+        );
+
 
     if (closeButton && modal) {
 
-        closeButton.addEventListener("click", function() {
+        closeButton.addEventListener(
+            "click",
+            function() {
 
-            modal.classList.remove("active");
+                modal.classList.remove(
+                    "active"
+                );
 
-        });
+            }
+        );
+
     }
+
 
     if (modal) {
 
-        modal.addEventListener("click", function(event) {
+        modal.addEventListener(
+            "click",
+            function(event) {
 
-            if (event.target === modal) {
-                modal.classList.remove("active");
+                if (event.target === modal) {
+
+                    modal.classList.remove(
+                        "active"
+                    );
+
+                }
+
             }
+        );
 
-        });
     }
 }
 
@@ -1551,36 +1926,54 @@ function setupCardModal() {
 function setupCardSearch() {
 
     const searchInput =
-        document.getElementById("cardSearch");
+        document.getElementById(
+            "cardSearch"
+        );
+
 
     if (!searchInput) {
         return;
     }
 
-    searchInput.addEventListener("input", function() {
 
-        const query =
-            searchInput.value
-                .toLowerCase()
-                .trim();
+    searchInput.addEventListener(
+        "input",
+        function() {
 
-        const cards =
-            document.querySelectorAll(".selector-card");
+            const query =
+                searchInput.value
+                    .toLowerCase()
+                    .trim();
 
-        cards.forEach(function(cardElement) {
 
-            const name =
-                cardElement
-                    .querySelector("strong")
-                    ?.textContent
-                    .toLowerCase() || "";
+            const cards =
+                document.querySelectorAll(
+                    ".selector-card"
+                );
 
-            cardElement.style.display =
-                name.includes(query)
-                    ? ""
-                    : "none";
-        });
-    });
+
+            cards.forEach(
+                function(cardElement) {
+
+                    const name =
+                        cardElement
+                            .querySelector(
+                                "strong"
+                            )
+                            ?.textContent
+                            .toLowerCase() || "";
+
+
+                    cardElement.style.display =
+                        name.includes(query)
+                            ? ""
+                            : "none";
+
+                }
+            );
+
+        }
+    );
 }
 
 
@@ -1591,19 +1984,33 @@ function setupCardSearch() {
 function setupNumberOptions() {
 
     const options =
-        document.querySelectorAll(".number-option");
+        document.querySelectorAll(
+            ".number-option"
+        );
+
 
     options.forEach(function(option) {
 
-        option.addEventListener("click", function() {
+        option.addEventListener(
+            "click",
+            function() {
 
-            options.forEach(function(item) {
-                item.classList.remove("active");
-            });
+                options.forEach(
+                    function(item) {
+                        item.classList.remove(
+                            "active"
+                        );
+                    }
+                );
 
-            option.classList.add("active");
 
-        });
+                option.classList.add(
+                    "active"
+                );
+
+            }
+        );
+
     });
 }
 
@@ -1615,34 +2022,57 @@ function setupNumberOptions() {
 function setupSpreadOptions() {
 
     const options =
-        document.querySelectorAll(".spread-option");
+        document.querySelectorAll(
+            ".spread-option"
+        );
+
 
     const cardsArea =
-        document.getElementById("cardsArea");
+        document.getElementById(
+            "cardsArea"
+        );
+
 
     if (!cardsArea) {
         return;
     }
 
+
     options.forEach(function(option) {
 
-        option.addEventListener("click", function() {
+        option.addEventListener(
+            "click",
+            function() {
 
-            options.forEach(function(item) {
-                item.classList.remove("active");
-            });
+                options.forEach(
+                    function(item) {
+                        item.classList.remove(
+                            "active"
+                        );
+                    }
+                );
 
-            option.classList.add("active");
 
-            const spread =
-                option.dataset.spread || "line";
+                option.classList.add(
+                    "active"
+                );
 
-            cardsArea.className =
-                "cards-area spread-" + spread;
 
-            updateEmptyCardsPositions();
+                const spread =
+                    option.dataset.spread ||
+                    "line";
 
-        });
+
+                cardsArea.className =
+                    "cards-area spread-" +
+                    spread;
+
+
+                updateEmptyCardsPositions();
+
+            }
+        );
+
     });
 }
 
@@ -1658,32 +2088,47 @@ function setupSelectionMode() {
             ".selection-mode-option"
         );
 
+
     options.forEach(function(option) {
 
-        option.addEventListener("click", function() {
+        option.addEventListener(
+            "click",
+            function() {
 
-            options.forEach(function(item) {
-                item.classList.remove("active");
-            });
+                options.forEach(
+                    function(item) {
+                        item.classList.remove(
+                            "active"
+                        );
+                    }
+                );
 
-            option.classList.add("active");
 
-            const mode =
-                option.dataset.mode;
+                option.classList.add(
+                    "active"
+                );
 
-            if (mode === "manual") {
 
-                initializeEmptyCards();
+                const mode =
+                    option.dataset.mode;
+
+
+                if (mode === "manual") {
+
+                    initializeEmptyCards();
+
+                }
+
+
+                if (mode === "random") {
+
+                    clearEmptyCards();
+
+                }
 
             }
+        );
 
-            if (mode === "random") {
-
-                clearEmptyCards();
-
-            }
-
-        });
     });
 }
 
@@ -1695,36 +2140,54 @@ function setupSelectionMode() {
 function initializeEmptyCards() {
 
     const cardsArea =
-        document.getElementById("cardsArea");
+        document.getElementById(
+            "cardsArea"
+        );
+
 
     if (!cardsArea) {
         return;
     }
+
 
     const activeNumber =
         document.querySelector(
             ".number-option.active"
         );
 
+
     const number =
         activeNumber
-            ? parseInt(activeNumber.dataset.number)
+            ? parseInt(
+                activeNumber.dataset.number
+            )
             : 1;
 
+
     const currentCards =
-        cardsArea.querySelectorAll(".tarot-slot");
+        cardsArea.querySelectorAll(
+            ".tarot-slot"
+        );
+
 
     if (currentCards.length > 0) {
         return;
     }
 
+
     cardsArea.innerHTML = "";
 
-    for (let i = 0; i < number; i++) {
+
+    for (
+        let i = 0;
+        i < number;
+        i++
+    ) {
 
         createEmptyCardSlot(i);
 
     }
+
 
     updateEmptyCardsPositions();
 }
@@ -1737,20 +2200,32 @@ function initializeEmptyCards() {
 function createEmptyCardSlot(index) {
 
     const cardsArea =
-        document.getElementById("cardsArea");
+        document.getElementById(
+            "cardsArea"
+        );
+
 
     if (!cardsArea) {
         return;
     }
 
+
     const slot =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    slot.className = "tarot-slot empty-slot";
 
-    slot.dataset.position = index;
+    slot.className =
+        "tarot-slot empty-slot";
+
+
+    slot.dataset.position =
+        index;
+
 
     slot.innerHTML = `
+
         <div class="empty-card">
 
             <div class="empty-card-plus">
@@ -1760,15 +2235,26 @@ function createEmptyCardSlot(index) {
             </div>
 
         </div>
+
     `;
 
-    slot.addEventListener("click", function() {
 
-        openCardSelectorForSlot(slot);
+    slot.addEventListener(
+        "click",
+        function() {
 
-    });
+            openCardSelectorForSlot(
+                slot
+            );
 
-    cardsArea.appendChild(slot);
+        }
+    );
+
+
+    cardsArea.appendChild(
+        slot
+    );
+
 
     refreshIcons();
 }
@@ -1781,53 +2267,78 @@ function createEmptyCardSlot(index) {
 function openCardSelectorForSlot(slot) {
 
     const modal =
-        document.getElementById("cardModal");
+        document.getElementById(
+            "cardModal"
+        );
+
 
     if (!modal) {
         return;
     }
 
+
     modal.dataset.targetSlot =
         slot.dataset.position;
 
-    modal.classList.add("active");
+
+    modal.classList.add(
+        "active"
+    );
+
 
     refreshIcons();
 }
 
 
 // ========================================
-// MODIFICAR SELECTOR PARA ASIGNAR CARTA
+// ASIGNAR CARTA A SLOT
 // ========================================
 
-function assignCardToSlot(card, slot) {
+function assignCardToSlot(
+    card,
+    slot
+) {
 
     if (!slot) {
         return;
     }
 
+
     const image =
         getCardImage(card);
+
 
     const name =
         getSpanishCardName(card);
 
+
     const position =
-        parseInt(slot.dataset.position || "0");
+        parseInt(
+            slot.dataset.position || "0"
+        );
+
 
     const spread =
         getCurrentSpread();
 
+
     const positions =
-        spreadPositions[spread] || spreadPositions.line;
+        spreadPositions[spread] ||
+        spreadPositions.line;
+
 
     const positionName =
         positions[position] ||
-        "Posición " + (position + 1);
+        "Posición " +
+        (position + 1);
 
-    slot.className = "tarot-slot selected-slot";
+
+    slot.className =
+        "tarot-slot selected-slot";
+
 
     slot.innerHTML = `
+
         <div class="tarot-card">
 
             <div class="tarot-card-inner">
@@ -1836,17 +2347,24 @@ function assignCardToSlot(card, slot) {
 
                     ${
                         image
-                            ? `<img
-                                class="tarot-image"
-                                src="${image}"
-                                alt="${name}"
-                              >`
-                            : `<div class="no-image">
-                                TAROT
-                              </div>`
+
+                            ? `
+                                <img
+                                    class="tarot-image"
+                                    src="${image}"
+                                    alt="${name}"
+                                >
+                            `
+
+                            : `
+                                <div class="no-image">
+                                    TAROT
+                                </div>
+                            `
                     }
 
                 </div>
+
 
                 <div class="tarot-card-back">
 
@@ -1854,9 +2372,11 @@ function assignCardToSlot(card, slot) {
                         ${name}
                     </div>
 
+
                     <div class="selected-card-position">
                         ${positionName}
                     </div>
+
 
                     <div class="selected-card-action">
                         Haz clic para girar
@@ -1867,24 +2387,37 @@ function assignCardToSlot(card, slot) {
             </div>
 
         </div>
+
     `;
 
+
     const tarotCard =
-        slot.querySelector(".tarot-card");
+        slot.querySelector(
+            ".tarot-card"
+        );
+
 
     if (tarotCard) {
 
-        tarotCard.addEventListener("click", function(event) {
+        tarotCard.addEventListener(
+            "click",
+            function(event) {
 
-            event.stopPropagation();
+                event.stopPropagation();
 
-            tarotCard.classList.toggle("flipped");
+                tarotCard.classList.toggle(
+                    "flipped"
+                );
 
-        });
+            }
+        );
+
     }
+
 
     slot.dataset.cardName =
         getCardName(card);
+
 
     refreshIcons();
 }
@@ -1897,28 +2430,37 @@ function assignCardToSlot(card, slot) {
 function selectCardForSlot(card) {
 
     const modal =
-        document.getElementById("cardModal");
+        document.getElementById(
+            "cardModal"
+        );
+
 
     if (!modal) {
         return;
     }
 
+
     const position =
         modal.dataset.targetSlot;
+
 
     if (
         position === undefined ||
         position === null ||
         position === ""
     ) {
+
         selectCard(card);
+
         return;
     }
+
 
     const slot =
         document.querySelector(
             `.tarot-slot[data-position="${position}"]`
         );
+
 
     if (slot) {
 
@@ -1929,18 +2471,32 @@ function selectCardForSlot(card) {
                 )}"]`
             );
 
-        if (alreadyUsed && alreadyUsed !== slot) {
 
-            alert("Esa carta ya está utilizada en la tirada.");
+        if (
+            alreadyUsed &&
+            alreadyUsed !== slot
+        ) {
+
+            alert(
+                "Esa carta ya está utilizada en la tirada."
+            );
 
             return;
         }
 
-        assignCardToSlot(card, slot);
+
+        assignCardToSlot(
+            card,
+            slot
+        );
 
     }
 
-    modal.classList.remove("active");
+
+    modal.classList.remove(
+        "active"
+    );
+
 
     delete modal.dataset.targetSlot;
 }
@@ -1953,46 +2509,65 @@ function selectCardForSlot(card) {
 function setupSlotSelection() {
 
     const container =
-        document.getElementById("modalCards");
+        document.getElementById(
+            "modalCards"
+        );
+
 
     if (!container) {
         return;
     }
 
-    container.addEventListener("click", function(event) {
 
-        const button =
-            event.target.closest(".selector-card");
+    container.addEventListener(
+        "click",
+        function(event) {
 
-        if (!button) {
-            return;
+            const button =
+                event.target.closest(
+                    ".selector-card"
+                );
+
+
+            if (!button) {
+                return;
+            }
+
+
+            const index =
+                Array.from(
+                    container.querySelectorAll(
+                        ".selector-card"
+                    )
+                ).indexOf(button);
+
+
+            if (index === -1) {
+                return;
+            }
+
+
+            const card =
+                tarotCards[index];
+
+
+            const modal =
+                document.getElementById(
+                    "cardModal"
+                );
+
+
+            if (
+                modal &&
+                modal.dataset.targetSlot !== undefined
+            ) {
+
+                selectCardForSlot(card);
+
+            }
+
         }
-
-        const index =
-            Array.from(
-                container.querySelectorAll(".selector-card")
-            ).indexOf(button);
-
-        if (index === -1) {
-            return;
-        }
-
-        const card =
-            tarotCards[index];
-
-        const modal =
-            document.getElementById("cardModal");
-
-        if (
-            modal &&
-            modal.dataset.targetSlot !== undefined
-        ) {
-
-            selectCardForSlot(card);
-
-        }
-
-    });
+    );
 }
 
 
@@ -2007,11 +2582,14 @@ function getCurrentSpread() {
             ".spread-option.active"
         );
 
+
     if (!active) {
         return "line";
     }
 
-    return active.dataset.spread || "line";
+
+    return active.dataset.spread ||
+        "line";
 }
 
 
@@ -2024,38 +2602,52 @@ function updateEmptyCardsPositions() {
     const spread =
         getCurrentSpread();
 
+
     const positions =
         spreadPositions[spread] ||
         spreadPositions.line;
+
 
     const slots =
         document.querySelectorAll(
             "#cardsArea .tarot-slot"
         );
 
-    slots.forEach(function(slot, index) {
 
-        slot.dataset.position = index;
+    slots.forEach(
+        function(slot, index) {
 
-        const selected =
-            slot.classList.contains("selected-slot");
+            slot.dataset.position =
+                index;
 
-        if (selected) {
 
-            const positionElement =
-                slot.querySelector(
-                    ".selected-card-position"
+            const selected =
+                slot.classList.contains(
+                    "selected-slot"
                 );
 
-            if (positionElement) {
 
-                positionElement.textContent =
-                    positions[index] ||
-                    "Posición " + (index + 1);
+            if (selected) {
+
+                const positionElement =
+                    slot.querySelector(
+                        ".selected-card-position"
+                    );
+
+
+                if (positionElement) {
+
+                    positionElement.textContent =
+                        positions[index] ||
+                        "Posición " +
+                        (index + 1);
+
+                }
 
             }
+
         }
-    });
+    );
 }
 
 
@@ -2066,13 +2658,18 @@ function updateEmptyCardsPositions() {
 function clearEmptyCards() {
 
     const cardsArea =
-        document.getElementById("cardsArea");
+        document.getElementById(
+            "cardsArea"
+        );
+
 
     if (!cardsArea) {
         return;
     }
 
+
     cardsArea.innerHTML = "";
+
 
     initializeEmptyCards();
 }
@@ -2085,161 +2682,238 @@ function clearEmptyCards() {
 function setupDrawButton() {
 
     const drawButton =
-        document.getElementById("drawButton");
+        document.getElementById(
+            "drawButton"
+        );
+
 
     const resetButton =
-        document.getElementById("resetButton");
+        document.getElementById(
+            "resetButton"
+        );
+
 
     const cardsArea =
-        document.getElementById("cardsArea");
+        document.getElementById(
+            "cardsArea"
+        );
+
 
     const status =
-        document.getElementById("readingStatus");
+        document.getElementById(
+            "readingStatus"
+        );
+
 
     if (!drawButton || !cardsArea) {
         return;
     }
 
-    drawButton.addEventListener("click", function() {
 
-        if (tarotCards.length === 0) {
-            return;
-        }
+    drawButton.addEventListener(
+        "click",
+        function() {
 
-        const numberButton =
-            document.querySelector(
-                ".number-option.active"
-            );
+            if (tarotCards.length === 0) {
+                return;
+            }
 
-        const number =
-            numberButton
-                ? parseInt(numberButton.dataset.number)
-                : 1;
 
-        const shuffled =
-            [...tarotCards]
-                .sort(function() {
-                    return Math.random() - 0.5;
-                })
-                .slice(0, number);
+            const numberButton =
+                document.querySelector(
+                    ".number-option.active"
+                );
 
-        const spread =
-            getCurrentSpread();
 
-        const positions =
-            spreadPositions[spread] ||
-            spreadPositions.line;
+            const number =
+                numberButton
+                    ? parseInt(
+                        numberButton.dataset.number
+                    )
+                    : 1;
 
-        cardsArea.innerHTML = "";
 
-        shuffled.forEach(function(card, index) {
+            const shuffled =
+                [...tarotCards]
+                    .sort(function() {
 
-            const slot =
-                document.createElement("div");
+                        return Math.random() - 0.5;
 
-            slot.className =
-                "tarot-slot selected-slot";
+                    })
+                    .slice(
+                        0,
+                        number
+                    );
 
-            slot.dataset.position =
-                index;
 
-            slot.dataset.cardName =
-                getCardName(card);
+            const spread =
+                getCurrentSpread();
 
-            const image =
-                getCardImage(card);
 
-            const name =
-                getSpanishCardName(card);
+            const positions =
+                spreadPositions[spread] ||
+                spreadPositions.line;
 
-            const positionName =
-                positions[index] ||
-                "Posición " + (index + 1);
 
-            slot.innerHTML = `
-                <div class="tarot-card">
+            cardsArea.innerHTML = "";
 
-                    <div class="tarot-card-inner">
 
-                        <div class="tarot-card-front">
+            shuffled.forEach(
+                function(card, index) {
 
-                            ${
-                                image
-                                    ? `<img
-                                        class="tarot-image"
-                                        src="${image}"
-                                        alt="${name}"
-                                      >`
-                                    : `<div class="no-image">
-                                        TAROT
-                                      </div>`
-                            }
+                    const slot =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    slot.className =
+                        "tarot-slot selected-slot";
+
+
+                    slot.dataset.position =
+                        index;
+
+
+                    slot.dataset.cardName =
+                        getCardName(card);
+
+
+                    const image =
+                        getCardImage(card);
+
+
+                    const name =
+                        getSpanishCardName(card);
+
+
+                    const positionName =
+                        positions[index] ||
+                        "Posición " +
+                        (index + 1);
+
+
+                    slot.innerHTML = `
+
+                        <div class="tarot-card">
+
+                            <div class="tarot-card-inner">
+
+                                <div class="tarot-card-front">
+
+                                    ${
+                                        image
+
+                                            ? `
+                                                <img
+                                                    class="tarot-image"
+                                                    src="${image}"
+                                                    alt="${name}"
+                                                >
+                                            `
+
+                                            : `
+                                                <div class="no-image">
+                                                    TAROT
+                                                </div>
+                                            `
+                                    }
+
+                                </div>
+
+
+                                <div class="tarot-card-back">
+
+                                    <div class="selected-card-name">
+                                        ${name}
+                                    </div>
+
+
+                                    <div class="selected-card-position">
+                                        ${positionName}
+                                    </div>
+
+
+                                    <div class="selected-card-action">
+                                        Haz clic para girar
+                                    </div>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
-                        <div class="tarot-card-back">
+                    `;
 
-                            <div class="selected-card-name">
-                                ${name}
-                            </div>
 
-                            <div class="selected-card-position">
-                                ${positionName}
-                            </div>
+                    const tarotCard =
+                        slot.querySelector(
+                            ".tarot-card"
+                        );
 
-                            <div class="selected-card-action">
-                                Haz clic para girar
-                            </div>
 
-                        </div>
+                    tarotCard.addEventListener(
+                        "click",
+                        function() {
 
-                    </div>
+                            tarotCard.classList.toggle(
+                                "flipped"
+                            );
 
-                </div>
-            `;
+                        }
+                    );
 
-            const tarotCard =
-                slot.querySelector(".tarot-card");
 
-            tarotCard.addEventListener(
-                "click",
-                function() {
-
-                    tarotCard.classList.toggle(
-                        "flipped"
+                    cardsArea.appendChild(
+                        slot
                     );
 
                 }
             );
 
-            cardsArea.appendChild(slot);
-        });
 
-        if (status) {
+            if (status) {
 
-            status.textContent =
-                number +
-                " carta" +
-                (number > 1 ? "s" : "") +
-                " seleccionada" +
-                (number > 1 ? "s" : "");
+                status.textContent =
+                    number +
+                    " carta" +
+                    (number > 1
+                        ? "s"
+                        : "") +
+                    " seleccionada" +
+                    (number > 1
+                        ? "s"
+                        : "");
+
+            }
 
         }
-    });
+    );
+
 
     if (resetButton) {
 
-        resetButton.addEventListener("click", function() {
+        resetButton.addEventListener(
+            "click",
+            function() {
 
-            cardsArea.innerHTML = "";
+                cardsArea.innerHTML = "";
 
-            initializeEmptyCards();
 
-            if (status) {
-                status.textContent = "Preparada";
+                initializeEmptyCards();
+
+
+                if (status) {
+
+                    status.textContent =
+                        "Preparada";
+
+                }
+
             }
+        );
 
-        });
     }
 }
 
@@ -2251,29 +2925,47 @@ function setupDrawButton() {
 function setupEmptyCardButton() {
 
     const cardsArea =
-        document.getElementById("cardsArea");
+        document.getElementById(
+            "cardsArea"
+        );
+
 
     if (!cardsArea) {
         return;
     }
 
-    cardsArea.addEventListener("click", function(event) {
 
-        const emptyCard =
-            event.target.closest(".empty-card");
+    cardsArea.addEventListener(
+        "click",
+        function(event) {
 
-        if (!emptyCard) {
-            return;
+            const emptyCard =
+                event.target.closest(
+                    ".empty-card"
+                );
+
+
+            if (!emptyCard) {
+                return;
+            }
+
+
+            const slot =
+                emptyCard.closest(
+                    ".tarot-slot"
+                );
+
+
+            if (slot) {
+
+                openCardSelectorForSlot(
+                    slot
+                );
+
+            }
+
         }
-
-        const slot =
-            emptyCard.closest(".tarot-slot");
-
-        if (slot) {
-            openCardSelectorForSlot(slot);
-        }
-
-    });
+    );
 }
 
 
@@ -2300,27 +2992,46 @@ function refreshIcons() {
 
 function setupEscapeKey() {
 
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener(
+        "keydown",
+        function(event) {
 
-        if (event.key !== "Escape") {
-            return;
+            if (event.key !== "Escape") {
+                return;
+            }
+
+
+            const detailModal =
+                document.getElementById(
+                    "detailModal"
+                );
+
+
+            const cardModal =
+                document.getElementById(
+                    "cardModal"
+                );
+
+
+            if (detailModal) {
+
+                detailModal.classList.remove(
+                    "active"
+                );
+
+            }
+
+
+            if (cardModal) {
+
+                cardModal.classList.remove(
+                    "active"
+                );
+
+            }
+
         }
-
-        const detailModal =
-            document.getElementById("detailModal");
-
-        const cardModal =
-            document.getElementById("cardModal");
-
-        if (detailModal) {
-            detailModal.classList.remove("active");
-        }
-
-        if (cardModal) {
-            cardModal.classList.remove("active");
-        }
-
-    });
+    );
 }
 
 
